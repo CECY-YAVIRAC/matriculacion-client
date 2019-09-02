@@ -1,0 +1,118 @@
+<div class="col-md-12 user-container">
+    <div class="row">
+       <div class="col-sm-6">             
+            <img src="assets/images/logo_cecy.png" width="200px" height="80px" align="right">
+          </div>
+      </div>     
+  <br>
+    <h4> Catálogo Roles de los Usuarios de los Cursos de Capacitación Continua</h4>
+    <br> 
+<div class="row">
+  <div class="col-lg-4 col-xs-12">
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text fa fa-search" id="basic-addon-buscar"></span>
+      </div>
+      <input type="text" [(ngModel)]="buscador" class="form-control text-uppercase" placeholder="INGRESE LA CÉDULA O EL NOMBRE DEL USUARIO" (keyup)="filter($event)">
+    </div>
+  </div>
+</div>
+    <br>
+    <button class="btn btn-success" style="width:180px" (click)="openUser(contentUser,null,true)"> Añadir Usuarios</button>
+    <br>
+    <br>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th class="hidden">Id</th>
+        <th>Rol</th>
+        <th>Cédula</th>
+        <th>Nombre</th>     
+        <th>Email</th>    
+            
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let user of users">
+        <td class="hidden">{{user.id}}</td>
+        <td>{{user.role_id}}</td>
+        <td>{{user.user_name}}</td> 
+        <td>{{user.name}}</td>       
+        <td>{{user.email}}</td>                     
+        <td><button class="btn btn-danger" (click)="deleteUser(user)"> Borrar</button>
+            <button class="btn btn-success" (click)="openUser(contentUser,user,false)" style="margin-left: 20px;"> Asignar Nuevo Rol</button></td>
+      </tr>
+    </tbody>
+    </table>  
+   <ng-template #contentUser let-c="close" let-d="dismiss">
+    <form name="users" method="post" #formCtrl="ngForm">
+      <div class="modal-header">
+        <div class="row">
+          <h4 class="col-lg-12" name="titulo">Nuevo</h4>
+        </div>
+      </div>
+      <div class="modal-body" style="padding: 50px ">
+        <div class="form-group row">
+          <div class="col-lg-12">           
+              <label for="createUser">
+                  <b class="text-danger">*</b> Rol:
+                </label>
+                <select [(ngModel)]="userNuevo.role_id" class="form-control" id="role" name="role">
+              <option value="0" selected>SELECCIONE...</option>
+              <option value="{{rol.id}}" *ngFor="let rol of roles">
+                {{rol.descripcion}}
+                  </option>
+                </select>
+          </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-lg-12" >
+          <label for="createUser">
+            <b class="text-danger">*</b> Cédula:
+          </label>
+          <input type="text" [(ngModel)]="userNuevo.user_name" class="form-control"
+              id="username" name="username" placeholder="Ej. 1713827790">
+         </div>
+         </div>  
+       <div class="form-group row">
+          <div class="col-lg-12" >
+            <label for="createUser">
+              <b class="text-danger">*</b> Nombre:
+            </label>
+            <input type="text" [(ngModel)]="userNuevo.name" class="form-control"
+                id="name" name="name" placeholder="Ej. MARCO VINICIO VEGA VEGA">
+        </div>
+        </div> 
+        <div class="form-group row">
+          <div class="col-lg-12" >
+            <label for="createUser">
+              <b class="text-danger">*</b> Email:
+            </label>
+            <input type="text" [(ngModel)]="userNuevo.email" class="form-control"
+                id="email" name="email" placeholder="Ej. mvv.vega@yavirac.edu.ec">
+        </div>
+        </div>   
+        <div class="form-group row">
+          <div class="col-lg-12" >
+            <label for="createUser">
+              <b class="text-danger">*</b> Password:
+            </label>
+            <input type="text" [(ngModel)]="userNuevo.password" class="form-control"
+                id="password" name="password" placeholder="Díjite su número de cédula. Ej. 1234567890">
+        </div>
+        </div>                  
+      </div>
+      <div class="modal-footer" style="padding: 10px">        
+        <button type="button" class="btn btn-success"  (click)="c('save')">Guardar</button>
+        <button type="button" class="btn btn-danger" (click)="c('close')">Salir</button>
+      </div>
+    </form>
+  </ng-template>    
+   </div>   
+   
+  
+
+
+
+  
+ 

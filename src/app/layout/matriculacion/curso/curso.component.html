@@ -1,0 +1,171 @@
+<div class="col-md-12 user-container">
+  <div class="row">
+    <div class="col-sm-6">             
+        <img src="assets/images/logo_cecy.png" width="180px" height="120px" align="right">
+      </div>
+  </div>  
+  <br>
+    <h4> Catálogo Cursos de Capacitación Continua</h4>
+    <br> 
+    <div class="row">
+      <div class="col-lg-4 col-xs-12">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text fa fa-search" id="basic-addon-buscar"></span>
+          </div>
+          <input type="text" [(ngModel)]="buscador" class="form-control text-uppercase" placeholder="INGRESE EL CÓDIGO O EL NOMBRE DEL CURSO" (keyup)="filter($event)">
+        </div>
+      </div>
+    </div>  
+    <br>
+    <button class="btn btn-success" style="width:180px" (click)="openCurso(contentCurso,null,true)"> Añadir Curso</button>
+    <br>
+    <br>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th class="hidden">Id</th>
+        <th>Instituto</th>
+        <th>Código</th>
+        <th>Nombre</th>
+        <th>Tipo</th>
+        <th>Modalidad</th>       
+        <th>Duración</th>
+        <th>Lugar</th>
+        <th>Otro Lugar</th>       
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let curso of cursos">
+        <td class="hidden">{{curso.id}}</td>        
+        <td>{{curso.instituto.nombre}}</td>
+        <td>{{curso.codigo}}</td>
+        <td>{{curso.nombre}}</td>
+        <td>{{curso.tipo}}</td>
+        <td>{{curso.modalidad}}</td>      
+        <td>{{curso.duracion}}</td>
+        <td>{{curso.lugar}}</td>
+        <td>{{curso.lugar_otros}}</td>       
+        <td><button class="btn btn-danger" (click)="deleteCurso(curso)"> Borrar</button></td>
+        <td><button class="btn btn-success" (click)="openCurso(contentCurso,curso,false)"> Editar</button></td>
+      </tr>
+      </tbody>
+    </table>  
+   <ng-template #contentCurso let-c="close" let-d="dismiss">
+    <form name="cursos" method="post" #formCtrl="ngForm">
+      <div class="modal-header">
+        <div class="row">
+          <h4 class="col-lg-12" name="titulo">Nuevo Curso</h4>
+        </div>
+      </div>
+      <div class="modal-body" style="padding: 50px ">
+      <div class="form-group row">
+          <div class="col-lg-12">           
+              <label for="createCurso">
+                  <b class="text-danger">*</b> Instituto:
+                </label>
+                <select [(ngModel)]="cursoNuevo.instituto.id" class="form-control" id="instituto" name="instituto"
+                    [ngClass]="{'backgroundTextFieldWarning':cursoNuevo.instituto=='0','backgroundTextFieldSuccess':cursoNuevo.instituto!='0'}">
+              <option value="0" selected>SELECCIONE...</option>
+              <option value="{{instituto.id}}" *ngFor="let instituto of institutos">
+                {{instituto.nombre}}
+                  </option>
+                </select>
+          </div>
+      </div>
+          <div class="form-group row">
+              <div class="col-lg-12">
+                <label for="createCurso">
+                  <b class="text-danger">*</b> Código:
+                </label>
+                <input type="text" [(ngModel)]="cursoNuevo.codigo" class="form-control"           
+                           id="codigo" name="codigo" placeholder="Ej. ISTY-SETEC-A1- 001">                
+               </div>
+      </div>
+       <div class="form-group row">
+          <div class="col-lg-12" >
+            <label for="createCurso">
+              <b class="text-danger">*</b> Nombre:
+            </label>
+            <input type="text" [(ngModel)]="cursoNuevo.nombre" class="form-control" 
+                       id="nombre" name="nombre" placeholder="Ej. INGLÉS A1">
+           </div>
+           </div> 
+      <div class="form-group row">
+          <div class="col-lg-12" >
+            <label for="createCurso">
+              <b class="text-danger">*</b> Tipo:
+            </label>
+            <select [(ngModel)]="cursoNuevo.tipo" class="form-control"
+                    [ngClass]="{'backgroundTextFieldWarning':cursoNuevo.tipo=='0','backgroundTextFieldSuccess':cursoNuevo.tipo!='0'}"
+                    id="tipo" name="tipo">
+              <option value="0" selected>SELECCIONE...</option>
+              <option value="{{tipo.descripcion}}" *ngFor="let tipo of tipos">
+                {{tipo.descripcion}}
+              </option>
+            </select>            
+           </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-lg-12" >
+            <label for="createCurso">
+              <b class="text-danger">*</b> Modalidad:
+            </label>
+            <select [(ngModel)]="cursoNuevo.modalidad" class="form-control"
+                    [ngClass]="{'backgroundTextFieldWarning':cursoNuevo.modalidad=='0','backgroundTextFieldSuccess':cursoNuevo.modalidad!='0'}"
+                    id="modalidad" name="modalidad">
+              <option value="0" selected>SELECCIONE...</option>
+              <option value="{{modalidad.descripcion}}" *ngFor="let modalidad of modalidades">
+                {{modalidad.descripcion}}
+              </option>
+            </select>            
+           </div>
+        </div>   
+        <div class="form-group row">
+              <div class="col-lg-12" >
+                <label for="createCurso">
+                  <b class="text-danger">*</b> Duración:
+                </label>
+                <input type="number" [(ngModel)]="cursoNuevo.duracion" class="form-control" 
+                           id="duracion" name="duracion" placeholder="Ej. 160">
+               </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-lg-12" >
+                <label for="createCurso">
+                  <b class="text-danger">*</b> Lugar:
+                </label>
+                <select [(ngModel)]="cursoNuevo.lugar" class="form-control" id="lugar" name="lugar"
+                        [ngClass]="{'backgroundTextFieldWarning':cursoNuevo.lugar=='0','backgroundTextFieldSuccess':cursoNuevo.lugar!='0'}">
+                  <option value="0" selected>SELECCIONE...</option>
+                  <option value="{{lugar.descripcion}}" *ngFor="let lugar of lugares">
+                    {{lugar.descripcion}}
+                  </option>
+                </select>                
+               </div>
+            </div>             
+            <div class="form-group row">
+            <div class="col-lg-12" >                              
+              <label for="createCurso">
+                  <b class="text-danger">*</b> Otro Lugar:
+                </label>                      
+             <textarea rows="2" type="text" [(ngModel)]="cursoNuevo.lugar_otros"
+                   class="form-control" 
+                   id="lugar_otros" name="lugar_otros" placeholder="Ej. Especifique el lugar si eligio OTROS caso contrario escriba NINGUNO"></textarea>          
+          </div>
+          </div>                       
+      </div>
+      <div class="modal-footer" style="padding: 10px">        
+        <button type="button" class="btn btn-success"  (click)="c('save')">Guardar</button>
+        <button type="button" class="btn btn-danger" (click)="c('close')">Salir</button>
+      </div>
+    </form>
+  </ng-template>    
+   </div>   
+   
+  
+
+
+
+  
+ 

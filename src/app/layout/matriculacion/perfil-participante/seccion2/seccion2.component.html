@@ -1,0 +1,263 @@
+<div class="row mt-3">    
+    <div class="col-lg-7 col-xs-12">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon-curso">Seleccione El Curso, Horario y Modalidad Que Desea Seguir:</span>
+        </div>
+        <select 
+          [(ngModel)]="asignacion_id" 
+          class="form-control" 
+          id="asignacion" 
+          name="asignacion"
+          
+          (change)="getMatricula()"
+        >
+       <option value="0" selected>SELECCIONE...</option>
+       <option value="{{asignacion.id}}" *ngFor="let asignacion of asignaciones">
+        {{asignacion.curso.nombre + ' - ' + asignacion.hora_inicio + " a "  + asignacion.hora_fin + ' - ' + 
+        asignacion.curso.modalidad}}         
+      </option>
+    </select>
+      </div>
+    </div>
+</div>
+
+
+
+
+
+
+<div class="card mt-1" *ngIf="flag2" >
+    <div class="card-body">
+      <form name="datosCursoform" method="post" #formCtrl="ngForm">
+        <div class="row ml-2" >
+          <div class="col-lg-12 col-sm-12">
+            <h6 class="text-muted"><b class="text-danger">* </b>Todos los campos son obligatorios</h6>
+            <table class="table" >
+               <tr>   
+                    <td>
+                        <label for="telefonoCelular">
+                          <b class="text-danger">*</b> 6. Teléfono Celular:
+                        </label>
+                        <input type="text" [(ngModel)]="matricula.telefono_celular" class="form-control text-uppercase"
+                               id="telefonoCelular" name="telefonoCelular" placeholder="Ej. 098765432">
+                      </td>
+                      <td>
+                        <label for="telefonoFijo">
+                          <b class="text-danger">*</b> 7. Teléfono Convencional:
+                        </label>
+                        <input type="text" [(ngModel)]="matricula.telefono_fijo" class="form-control text-uppercase"
+                               id="telefonoFijo" name="telefonoFijo" placeholder="Ej. 0234567890">
+                      </td>
+                      <td colspan="8">
+                          <label for="correoPersonal">
+                            <b class="text-danger">*</b> 8. Correo Electrónico::
+                          </label>
+                          <input type="email" [(ngModel)]="matricula.correo_electronico"
+                                 class="form-control"
+                                 id="correoElectronico" name="correoElectronico" placeholder="Ej. micorreo@gmail.com">
+                        </td> 
+                </tr>
+                <tr>                      
+                  <td colspan="2">
+                    <label for="direccion">
+                      <b class="text-danger">*</b> 9. Dirección de Domicilio:
+                    </label>
+                    <textarea rows="2" type="text" [(ngModel)]="matricula.direccion"
+                              class="form-control text-uppercase"
+                              id="direccion" name="direccion"placeholder="EJ. SECTOR, CALLE PRINCIPAL, CALLE SECUNDARIA, NÚMERO DE CASA"
+                              required ></textarea>
+                  </td>
+                  <td colspan="8">                  
+                      <label for="instruccionAcademica">
+                        <b class="text-danger">*</b> 10. Nivel de Instrucción:
+                      </label>
+                      <select [(ngModel)]="matricula.instruccion_academica" class="form-control" id="instruccion_academica" name="instruccion_academica"
+                              [ngClass]="{'backgroundTextFieldWarning':matricula.instruccion_academica=='0','backgroundTextFieldSuccess':matricula.instruccion_academica!='0'}"
+                              >
+                        <option value="0" selected>SELECCIONE...</option>
+                        <option value="{{instruccion_academica.codigo}}" *ngFor="let instruccion_academica of instruccionesAcademica">
+                          {{instruccion_academica.descripcion}}
+                        </option>
+                      </select>
+                 </td>                            
+                </tr>                           
+              <tr>
+                  <td>                    
+                      <label for="condicionAcademica">
+                        <b class="text-danger">*</b> 11. ¿Su Condición Académica Actual?
+                      </label>
+                      <select [(ngModel)]="matricula.condicion_academica" class="form-control" id="condicionAcademica" name="condicionAcademica"
+                              [ngClass]="{'backgroundTextFieldWarning':matricula.condicion_academica=='0','backgroundTextFieldSuccess':matricula.condicion_academica!='0'}"
+                              >
+                    <option value="0" selected>SELECCIONE...</option>
+                    <option value="{{condicion_academica.codigo}}" *ngFor="let condicion_academica of condicionesAcademica">
+                      {{condicion_academica.descripcion}}
+                        </option>
+                      </select>                  
+                  </td> 
+                  <td>  
+                      <div *ngIf = "matricula.condicion_academica == 1 || matricula.condicion_academica == 2 || matricula.condicion_academica == 3">    
+                      <label for="carrera">
+                        <b class="text-danger">*</b> 11.1. ¿En Qué Carrera?
+                      </label>
+                      <select [(ngModel)]="matricula.carrera" class="form-control" id="carrera" name="carrera"
+                      [ngClass]="{'backgroundTextFieldWarning':matricula.carrera=='0','backgroundTextFieldSuccess':matricula.carrera!='0'}"
+                      >
+                    <option value="0" selected>SELECCIONE...</option>
+                    <option value="{{carrera.id}}" *ngFor="let carrera of carreras">
+                      {{carrera.nombre}}
+                        </option>
+                      </select> 
+                    </div>                            
+                  </td>    
+                  <td> 
+                      <div *ngIf = "matricula.condicion_academica == 1">              
+                      <label for="nivel">
+                        <b class="text-danger">*</b> 11.2. ¿Qué Nivel Cursa?
+                      </label>
+                      <select [(ngModel)]="matricula.nivel" class="form-control" id="nivel" name="nivel"
+                      [ngClass]="{'backgroundTextFieldWarning':matricula.nivel=='0','backgroundTextFieldSuccess':matricula.nivel!='0'}"
+                      >
+                    <option value="0" selected>SELECCIONE...</option>
+                    <option value="{{nivel.codigo}}" *ngFor="let nivel of niveles">
+                      {{nivel.descripcion}}
+                        </option>
+                      </select>  
+                      </div>           
+                  </td>                                                       
+              </tr> 
+              <tr>
+                  <td>
+                     <label for="economicamenteActivo">
+                       <b class="text-danger">*</b> 12. ¿Es Económicamente Activo?
+                     </label>
+                     <select [(ngModel)]="matricula.economicamente_activo" class="form-control" id="economicamenteActivo" name="economicamenteActivo"
+                             [ngClass]="{'backgroundTextFieldWarning':matricula.economicamente_activo=='0','backgroundTextFieldSuccess':matricula.economicamente_activo!='0'}"
+                             >
+                       <option value="0" selected>SELECCIONE...</option>
+                       <option value="{{economicamente_activo.codigo}}" *ngFor="let economicamente_activo of opcionesSiNo">
+                         {{economicamente_activo.descripcion}}
+                       </option>
+                     </select>
+                   </td>
+                   <td>
+                      <div *ngIf = "matricula.economicamente_activo == 1">
+                          <label for="empresaTrabajo">
+                              <b class="text-danger">*</b> 12.1. Empresa Trabaja:
+                            </label>                      
+                         <input type="text" [(ngModel)]="matricula.empresa_trabajo"
+                               class="form-control"
+                               id="empresaTrabajo" name="empresaTrabajo" placeholder="Ej. ZERO PAPERS">
+                      </div>
+                    </td>                    
+                        <td>
+                            <div *ngIf = "matricula.economicamente_activo == 1">
+                               <label for="correoEmpresa">
+                                   <b class="text-danger">*</b> 12.2. Email Empresa: 
+                                 </label>
+                                 <input type="email" [(ngModel)]="matricula.correo_empresa"
+                                        class="form-control"
+                                        id="correoEmpresa" name="correoEmpresa" placeholder="Ej. micorreo@gmail.com">
+                            </div>
+                          </td>     
+                </tr>   
+              <tr>             
+                  <td>
+                      <div *ngIf = "matricula.economicamente_activo == 1">
+                          <label for="telefonoEmpresa">
+                              <b class="text-danger">*</b> 12.3. Telefóno Empresa:
+                            </label>
+                            <input type="text" [(ngModel)]="matricula.telefono_empresa"
+                                   class="form-control"
+                                   id="telefonoEmpresa" name="telefonoEmpresa" placeholder="Ej. 0987654324">
+                       </div>
+                      </td>
+                      <td colspan="2">
+                          <div *ngIf = "matricula.economicamente_activo == 1">
+                             <label for="actividadEmpresa">
+                                 <b class="text-danger">*</b> 12.4. Actividad Económica Empresa:
+                               </label>
+                               <input type="text" [(ngModel)]="matricula.actividad_empresa" class="form-control text-uppercase" 
+                                      id="actividadEmpresa" name="actividadEmpresa" placeholder="Ej. Software">
+                          </div>                      
+                     </td>              
+             </tr> 
+             <tr>
+                <td colspan="3">                    
+                    <div *ngIf = "matricula.economicamente_activo == 1">
+                       <label for="empresaDireccion">
+                           <b class="text-danger">*</b> 12.5. Dirección De La Empresa:
+                         </label>
+                         <textarea rows="2" type="text" [(ngModel)]="matricula.empresa_direccion"
+                                   class="form-control text-uppercase"
+                                   id="empresaDireccion" name="empresaDireccion" placeholder="EJ. SECTOR, CALLE PRINCIPAL, CALLE SECUNDARIA, NÚMERO DE CASA"
+                                   ></textarea>
+                    </div>
+                  </td>           
+              </tr>             
+              <tr>
+                  <td>
+                     <label for="cursoAuspicio">
+                       <b class="text-danger">*</b> 13. ¿Curso Auspiciado Por Empresa?
+                     </label>
+                     <select [(ngModel)]="matricula.curso_auspicio" class="form-control" id="cursoAuspicio" name="cursoAuspicio"
+                     [ngClass]="{'backgroundTextFieldWarning':matricula.curso_auspicio=='0','backgroundTextFieldSuccess':matricula.curso_auspicio!='0'}"
+                             >
+                       <option value="0" selected>SELECCIONE...</option>
+                       <option value="{{curso_auspicio.codigo}}" *ngFor="let curso_auspicio of opcionesSiNo">
+                         {{curso_auspicio.descripcion}}
+                       </option>
+                     </select>
+                   </td>
+                   <td colspan="4"> 
+                      <div *ngIf = "matricula.curso_auspicio== 1">
+                         <label for="nombreContacto">
+                             <b class="text-danger">*</b> 13.1. Nombre Del Contacto:                             
+                           </label>
+                           <input type="text" [(ngModel)]="matricula.nombre_contacto" class="form-control text-uppercase" 
+                                  id="nombreContacto" name="nombreContacto" placeholder="Ej. MARLON CARAPAZ">
+                      </div>                       
+                      </td>          
+                 </tr>      
+                 <tr>
+                     <td>
+                            <label for="averiguoCurso">
+                              <b class="text-danger">*</b> 14. ¿Cómo Se Enteró Del Curso?
+                            </label>
+                            <select [(ngModel)]="matricula.averiguo_curso" class="form-control" id="averiguoCurso" name="averiguoCurso"
+                            [ngClass]="{'backgroundTextFieldWarning':matricula.averiguo_curso=='0','backgroundTextFieldSuccess':matricula.averiguo_curso!='0'}"
+                                    >
+                              <option value="0" selected>SELECCIONE...</option>
+                              <option value="{{averiguo_curso.codigo}}" *ngFor="let averiguo_curso of averiguoCursos">
+                                {{averiguo_curso.descripcion}}
+                              </option>
+                            </select>
+                          </td>                      
+                        <td colspan="2">                  
+                         <label for="cursoSeguir">
+                           <b class="text-danger">*</b> 15. ¿Qué Otros Cursos Le Gustaría Seguir?
+                         </label>
+                         <textarea rows="2" type="text" [(ngModel)]="matricula.cursos_seguir"
+                                   class="form-control text-uppercase"
+                                   id="cursoSeguir" name="cursoSeguir"placeholder="EJ. MUSICA, BASE DE DATOS, MARKETING EMPRESARIAL, EXCEL AVANZADO"></textarea>
+                    </td>                                         
+                </tr> 
+                 <tr>
+                    <td>
+                    <button class="btn btn-success" (click)="guardarCambios()"> Guardar</button>                    
+                   </td>
+                </tr> 
+            </table>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <div class="row mt-3" *ngIf="estadoDatos!=''">
+    <div class="col-lg-12">
+      <span class="fa fa-save btn btn-link"> {{estadoDatos}}</span>
+    </div>
+  </div>
+  

@@ -1,0 +1,159 @@
+<div class="col-md-12 user-container">
+  <div class="row">
+    <div class="col-sm-6">             
+        <img src="assets/images/logo_cecy.png" width="180px" height="120px" align="right">
+      </div>
+  </div>      
+  <br>
+    <h4> Catálogo Facilitadores Cursos de Capacitación Continua</h4>
+    <br> 
+    <div class="row">
+      <div class="col-lg-4 col-xs-12">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text fa fa-search" id="basic-addon-buscar"></span>
+          </div>
+          <input type="text" [(ngModel)]="buscador" class="form-control text-uppercase" placeholder="INGRESE LA CÉDULA O APELLIDOS DEL FACILITADOR" (keyup)="filter($event)">
+        </div>
+      </div>
+    </div>  
+    <br>
+    <button class="btn btn-success" style="width:180px" (click)="openFacilitador(contentFacilitador,null,true)"> Añadir Facilitador</button>
+    <br>
+    <br>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th class="hidden">Id</th>
+        <th>Cédula</th>
+        <th>Primer Apellido</th>
+        <th>Segundo Apellido</th>
+        <th>Primer Nombre</th>
+        <th>Segundo Nombre</th>
+        <th>Fecha Nacimiento</th> 
+        <th>Email</th>
+        <th>Capacitaciones</th>
+        <th>Titulo Profesional</th> 
+       </tr>       
+      </thead>
+      <tbody>
+      <tr *ngFor="let facilitador of facilitadores">
+        <td class="hidden">{{facilitador.id}}</td>
+        <td>{{facilitador.cedula}}</td>
+        <td>{{facilitador.apellido1}}</td>
+        <td>{{facilitador.apellido2}}</td>
+        <td>{{facilitador.nombre1}}</td>
+        <td>{{facilitador.nombre2}}</td>
+        <td>{{facilitador.fecha_nacimiento}}</td>
+        <td>{{facilitador.correo_electronico}}</td>
+        <td>{{facilitador.capacitaciones}}</td> 
+        <td>{{facilitador.titulo}}</td> 
+        <td><button class="btn btn-danger" (click)="deleteFacilitador(facilitador)"> Borrar</button>
+        <td><button class="btn btn-success" (click)="openFacilitador(contentFacilitador,facilitador,false)"> Editar</button></td>
+      </tr>
+      </tbody>
+    </table>  
+   <ng-template #contentFacilitador let-c="close" let-d="dismiss">
+    <form name="facilitadores" method="post" #formCtrl="ngForm">
+      <div class="modal-header">
+        <div class="row">
+          <h4 class="col-lg-12" name="titulo">Nuevo Facilitador</h4>
+        </div>
+      </div>
+      <div class="modal-body" style="padding: 50px ">
+        <div class="form-group row">
+          <div class="col-lg-12">
+            <label for="createFacilitador">
+              <b class="text-danger">*</b> Cédula:
+            </label>
+            <input type="text" [(ngModel)]="facilitadorNuevo.cedula" class="form-control" 
+                       id="cedula" name="cedula" placeholder="Ej. 1713872678">
+           </div>
+      </div>
+      <div class="form-group row">
+              <div class="col-lg-12">
+                <label for="createFacilitador">
+                  <b class="text-danger">*</b> Primer Apellido:
+                </label>
+                <input type="text" [(ngModel)]="facilitadorNuevo.apellido1" class="form-control" 
+                           id="apellido1" name="apellido1" placeholder="Ej. Vega">
+               </div>
+      </div>
+       <div class="form-group row">
+          <div class="col-lg-12" >
+            <label for="createFacilitador">
+              <b class="text-danger">*</b> Segundo Apellido:
+            </label>
+            <input type="text" [(ngModel)]="facilitadorNuevo.apellido2" class="form-control"
+                       id="apellido2" name="apellido2" placeholder="Ej. Campo">
+           </div>
+           </div>  
+      <div class="form-group row">
+          <div class="col-lg-12" >
+            <label for="createFacilitador">
+              <b class="text-danger">*</b> Primer Nombre:
+            </label>
+            <input type="text" [(ngModel)]="facilitadorNuevo.nombre1" class="form-control" 
+                       id="nombre1" name="nombre1" placeholder="Ej. Marco">
+           </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-lg-12" >
+            <label for="createFacilitador">
+              <b class="text-danger">*</b> Segundo Nombre:
+            </label>
+            <input type="text" [(ngModel)]="facilitadorNuevo.nombre2" class="form-control" 
+                       id="nombre2" name="nombre2" placeholder="Ej. German">
+           </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-lg-12" >
+                <label for="createFacilitador">
+                 <b class="text-danger">*</b> Fecha de Nacimiento:
+                  </label>
+                  <input type="date" [(ngModel)]="facilitadorNuevo.fecha_nacimiento" class="form-control" id="fechaNacimiento"
+                         name="fechaNacimiento">                   
+             </div>
+          </div>
+          <div class="form-group row">
+              <div class="col-lg-12" >
+                <label for="createFacilitador">
+                  <b class="text-danger">*</b> Correo Electrónico:
+                </label>
+                <input type="email" [(ngModel)]="facilitadorNuevo.correo_electronico" class="form-control"
+                           id="correo_electronico" name="correo_electronico" placeholder="Ej. mvv.vega@yavirac.edu.ec">
+               </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-lg-12" >
+                  <label for="createFacilitador">
+                    <b class="text-danger">*</b> Ultimas Capacitaciones:
+                  </label>
+                  <textarea rows="2" type="text" [(ngModel)]="facilitadorNuevo.capacitaciones" class="form-control" 
+                  id="capacitaciones" name="capacitaciones" placeholder="Ej. Ingrese las capacitaciones realizadas en los últimos dos años"></textarea>                  
+                 </div>
+              </div>
+              <div class="form-group row">
+                  <div class="col-lg-12" >
+                    <label for="createFacilitador">
+                      <b class="text-danger">*</b> Titulo Profesional:
+                    </label>
+                    <input type="email" [(ngModel)]="facilitadorNuevo.titulo" class="form-control"
+                               id="titulo" name="titulo" placeholder="Ej. Ingeniero en Sistemas">
+                   </div>
+                </div>
+         </div>
+         <div class="modal-footer" style="padding: 10px">        
+            <button type="button" class="btn btn-success"  (click)="c('save')">Guardar</button>
+            <button type="button" class="btn btn-danger" (click)="c('close')">Salir</button>
+        </div>
+    </form>
+  </ng-template>    
+   </div>   
+   
+  
+
+
+
+  
+ 

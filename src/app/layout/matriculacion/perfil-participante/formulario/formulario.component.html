@@ -1,0 +1,231 @@
+<button type="button" class="btn btn-primary fa fa-download btn-lg mt-3 mb-3" (click)="imprimir()" *ngIf="flagFormulario">
+  Descargar
+</button>
+<br>
+<div class="col-lg-12">
+    <tr>                    
+        <td colspan="3">
+            <label>
+              <b class="text-danger">*</b>Seleccione El Curso Eligido A Participar:
+            </label>
+            <select [(ngModel)]="matriculaId" class="form-control" id="asignacion" name="asignacion"   
+                    [ngClass]="{'backgroundTextFieldWarning':matricula.asignacion=='0','backgroundTextFieldSuccess':matricula.asignacion!='0'}"
+                    (change)="obtenerDatosMatricula($event.target.value)">
+              <option value="0" selected>SELECCIONE...</option>
+              <option value="{{matricula.id}}" *ngFor="let matricula of matriculas">
+                {{matricula.nombre}}
+              </option>
+            </select>
+          </td>
+        </tr>
+        <br>
+</div>
+<div class="container" id="formulario1">
+  <div class="row ml-3" #encabezadoHojaVida>
+    <div class="col-lg-3">
+      <img src="assets/images/logo_senescyt.png" alt="">
+    </div>
+    <div class="col-lg-6 text-center">
+      <p>        
+        <strong>FORMULARIO: A2</strong>
+        <br>
+        <strong>INSCRIPCIÓN PARA CURSOS DE CAPACITACIÓN</strong>
+      </p>
+    </div>
+    <div class="col-lg-3 text-left">
+      <img src="assets/images/logo_instituto_4.png" alt="" width="80%" height="50%">
+    </div>
+  </div>
+  <div class="row m-5" #cuerpoHojaVida>
+    <div class="col-lg-12">
+      <table class="table table-bordered">
+        <tr>
+          <td colspan="4">
+            <strong>Código del curso:</strong>
+            <i class="ml-3">{{matricula.codigo}}</i>          
+        </tr>
+        <tr>
+            <td colspan="5">
+              <strong>Nombre del Curso:</strong>              
+              <i class="ml-3">{{matricula.nombre}}</i>
+            </td>            
+          </tr>
+        <tr>
+            <td colspan="5">
+                <strong>Horario del Curso:</strong>
+                <i class="ml-3">{{matricula.hora_inicio + ' - ' + matricula.hora_fin}}</i>
+              </td>
+        </tr>
+        <tr>
+          <td colspan="5">
+            <strong>Modalidad:</strong>           
+            <i class="ml-3">{{matricula.modalidad}}</i>            
+          </td>
+        </tr>        
+        <tr>          
+            <td class="text-center" colspan="5">
+                <strong>DATOS PERSONALES</strong>                
+            </td>        
+        </tr>
+        <tr>
+            <td colspan="5">
+              <strong>Apellidos y Nombres:</strong>
+              <i class="ml-3 text-uppercase">
+                {{participante.apellido1 + ' ' + participante.apellido2 + ' '
+              + participante.nombre1 + ' ' + participante.nombre2 + ' '}}
+              </i>
+            </td>
+          </tr>
+        <tr>
+          <td colspan="3">
+            <strong>Cédula de Ciudadanía:</strong>
+            <i class="ml-3">{{participante.identificacion}}</i>
+          </td> 
+          <td colspan="2">          
+            <strong>Fecha de Nacimiento:</strong>
+            <i class="ml-3">{{participante.fecha_nacimiento}}</i>
+          </td>         
+        </tr>
+        <tr>
+            <td colspan="5">
+                <strong>Género:</strong>
+                <i class="fa fa-circle-o ml-3 text-capitalize"
+                   [ngClass]="{'fa-circle':participante.genero==genero.codigo}"
+                   *ngFor="let genero of generos">
+                  {{genero.descripcion}}
+                </i>
+                </td>
+        </tr>
+        <tr>
+            <td colspan="5">
+              <strong>Etnia:</strong>
+              <i class="fa fa-circle-o ml-3 text-capitalize"
+                 [ngClass]="{'fa-circle':participante.etnia==etnia.codigo}"
+                 *ngFor="let etnia of etnias">
+                {{etnia.descripcion}}
+              </i>
+            </td>
+          </tr>
+          <tr>
+              <td colspan="5">
+                <strong>Dirección Domiciliaria:</strong>
+                <i class="ml-3 text-uppercase">{{matricula.direccion}}</i>
+              </td>          
+            </tr>
+            <tr>
+                <td colspan="3">
+                  <strong>Nro. Telefónico Convencional:</strong>
+                  <i class="ml-3">{{matricula.telefono_fijo}}</i>
+                </td>
+                <td colspan="2">
+                    <strong>Celular:</strong>
+                    <i class="ml-3">{{matricula.telefono_celular}}</i>
+                  </td>
+              </tr>          
+        <tr>
+          <td colspan="5">
+            <strong>Correo Electrónico:</strong>
+            <i class="ml-3">{{matricula.correo_electronico}}</i>
+          </td>
+        </tr> 
+        <tr>
+            <td colspan="5">
+              <strong>Nivel de Instrucción:</strong>
+              <i class="fa fa-circle-o ml-3 text-capitalize"
+                 [ngClass]="{'fa-circle':matricula.instruccion_academica==instruccion_academica.codigo}"
+                 *ngFor="let instruccion_academica of instruccionesAcademica">
+                {{instruccion_academica.descripcion}}
+              </i>
+            </td>
+          </tr>         
+          <tr>          
+              <td class="text-center" colspan="5">
+                  <strong>INFORMACIÓN LABORAL</strong>                
+              </td>        
+          </tr>
+          <tr>
+              <td colspan="5">
+                <strong>¿Es usted economicamente activo?:</strong>
+                <i class="fa fa-circle-o ml-3 text-capitalize"
+                   [ngClass]="{'fa-circle':matricula.economicamente_activo==economicamente_activo.codigo}"
+                   *ngFor="let economicamente_activo of opcionesSiNo">
+                  {{economicamente_activo.descripcion}}
+                </i>
+              </td>
+            </tr>  
+          <tr>
+              <td colspan="5">
+                  <strong>Empresa donde trabaja:</strong>
+                  <i class="ml-3 text-uppercase">{{matricula.empresa_trabajo}}</i>
+                </td>
+          </tr>
+          <tr>
+              <td colspan="5">
+                  <strong>Correo electrónico de la empresa:</strong>
+                  <i class="ml-3">{{matricula.correo_empresa}}</i>
+                </td>
+          </tr>
+          <tr>
+              <td colspan="5">
+                  <strong>Número telefónico de la empresa:</strong>
+                  <i class="ml-3">{{matricula.telefono_empresa}}</i>
+                </td>
+          </tr>
+          <tr>
+              <td colspan="5">
+                  <strong>Actividad de la empresa:</strong>
+                  <i class="ml-3 text-uppercase">{{matricula.actividad_empresa}}</i>
+                </td>
+          </tr>
+          <tr>
+                  <td colspan="5">
+                    <strong>¿El curso es auspiciado por la empresa?:</strong>
+                    <i class="fa fa-circle-o ml-3 text-capitalize"
+                       [ngClass]="{'fa-circle':matricula.curso_auspicio==curso_auspicio.codigo}"
+                       *ngFor="let curso_auspicio of opcionesSiNo">
+                      {{curso_auspicio.descripcion}}
+                    </i>
+                  </td>
+                </tr>
+                <tr>
+                    <td colspan="5">
+                        <strong>Si está auspiciado, indique el nombre de contacto:</strong>
+                        <i class="ml-3 text-uppercase">{{matricula.nombre_contacto}}</i>
+                      </td>
+                </tr>
+                <tr>
+                    <td colspan="5">
+                        <strong>¿Cómo se enteró del curso?</strong>
+                        <i class="fa fa-circle-o ml-3 text-capitalize"
+                       [ngClass]="{'fa-circle':matricula.averiguo_curso==averiguo_curso.codigo}"
+                       *ngFor="let averiguo_curso of averiguoCursos">
+                       {{averiguo_curso.descripcion}}
+                    </i>                       
+                      </td>
+                </tr>
+                <tr>
+                    <td colspan="5">
+                        <strong>¿Qué otros cursos le gustaría seguir?</strong>
+                        <i class="ml-3 text-uppercase">{{matricula.cursos_seguir}}</i>
+                      </td>
+                </tr>      
+      </table>
+    </div>
+  </div>
+  <div class="row m-5" #pieHojaVida>
+      <div class="col-lg-12">
+          <div class="row">
+            <div class="col-lg-12">
+              <i class="pull-right"> __________________________________________</i>
+              <strong class="pull-right">FIRMA ESTUDIANTE:</strong>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <i class="pull-right">Pág. 1 de 1</i>
+            </div>
+          </div>
+        </div>
+  </div>
+</div>
+<button type="button" class="btn btn-primary fa fa-download btn-lg" (click)="imprimir()"> Descargar</button>

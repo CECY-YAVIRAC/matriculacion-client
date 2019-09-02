@@ -1,0 +1,101 @@
+<div class="card mt-1">
+  <div class="card-body">
+    <form name="datosPersnalesform" method="post" #formCtrl="ngForm">
+      <div class="row ml-2">
+        <div class="col-lg-12 col-sm-12">
+          <h6 class="text-muted"><b class="text-danger">* </b>Todos los campos son obligatorios</h6>
+          <table class="table table-responsive">
+            <tr>            
+              <td colspan="2">
+                <label for="identificacion">
+                  <b class="text-danger">*</b> 1. Número de Documento:
+                </label>
+                <input [(ngModel)]="participante.identificacion" class="form-control"
+                       id="identificacion" name="identificacion" placeholder="Ej. 1723456789" required (focusout)="updateParticipante()">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="apellido1">
+                  <b class="text-danger">*</b> 2. Primer Apellido:
+                </label>
+                <input type="text" [(ngModel)]="participante.apellido1" class="form-control text-uppercase"
+                       id="apellido1" name="apellido1" placeholder="Primer Apellido" required (focusout)="updateParticipante()">
+              </td>
+              <td>
+                <label for="apellido2">
+                  <b class="text-danger">*</b> 2.1. Segundo Apellido:
+                </label>
+                <input type="text" [(ngModel)]="participante.apellido2"
+                       class="form-control text-uppercase"
+                       id="apellido2" name="apellidos" placeholder="Segundo Apellido" required (focusout)="updateParticipante()">
+              </td>                     
+            
+            <td>
+                <label for="nombre1">
+                  <b class="text-danger">*</b> 2.2. Primer Nombre:
+                </label>
+                <input type="text" [(ngModel)]="participante.nombre1"
+                       class="form-control text-uppercase"
+                       id="nombre1" name="nombre1" placeholder="Primer Nombre" required (focusout)="updateParticipante()">
+              </td>
+              <td>
+                <label for="nombre2">
+                  <b class="text-danger">*</b> 2.3. Segundo Nombre:
+                </label>
+                <input type="text" [(ngModel)]="participante.nombre2" class="form-control text-uppercase"
+                       id="nombre2" name="nombre2" placeholder="Segundo Nombre" required (focusout)="updateParticipante()">
+              </td>   
+            </tr>   
+            <tr>  
+                <td colspan="2">
+                    <label for="fechaNacimiento">
+                      <b class="text-danger">*</b> 3. Fecha de Nacimiento:
+                    </label>
+                    <input type="date" [(ngModel)]="participante.fecha_nacimiento" class="form-control" id="fechaNacimiento"
+                           name="fechaNacimiento"  required (focusout)="updateParticipante()">
+                </td>
+            </tr>
+            <tr>                    
+                <td colspan="2">
+                    <label for="genero">
+                      <b class="text-danger">*</b> 4. Género:
+                    </label>
+                    <select [(ngModel)]="participante.genero" class="form-control" id="genero" name="genero"
+                            [ngClass]="{'backgroundTextFieldWarning':participante.genero=='0','backgroundTextFieldSuccess':participante.genero=='1'||participante.genero=='2'}"
+                            required (change)="updateParticipante()">
+                      <option value="0" selected>SELECCIONE...</option>
+                      <option value="{{genero.codigo}}" *ngFor="let genero of generos">
+                        {{genero.descripcion}}
+                      </option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2">
+                      <label for="etnia">
+                        <b class="text-danger">*</b> 5. Etnia:
+                      </label>
+                      <select [(ngModel)]="participante.etnia" class="form-control"
+                              [ngClass]="{'backgroundTextFieldWarning':participante.etnia=='0','backgroundTextFieldSuccess':participante.etnia!='0'}"
+                              id="etnia" name="etnia" required (change)="updateParticipante()">
+                        <option value="0" selected>SELECCIONE...</option>
+                        <option value="{{etnia.codigo}}" *ngFor="let etnia of etnias">
+                          {{etnia.descripcion}}
+                        </option>
+                      </select>
+                    </td> 
+            </tr>                               
+          </table>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="row mt-3" *ngIf="estadoDatos!=''">
+    <div class="col-lg-12">
+      <span class="fa fa-save btn btn-link"> {{estadoDatos}}</span>
+    </div>
+  </div>
+  

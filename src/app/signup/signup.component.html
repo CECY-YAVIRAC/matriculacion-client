@@ -1,0 +1,62 @@
+<div class="login-page" [@routerTransition]>
+    <div class="row justify-content-md-center">
+        <div class="col-md-4">            
+            <h1>REGISTRO IGNUG</h1>
+            <form role="form">
+                <div class="form-content">
+
+                    <div class="form-group"> 
+                            <label for="userNuevo">
+                                    <i class="fa fa-key">
+                                      {{ 'Nombre Completo' | translate }}<i class="fa fa-question btn"
+                                                                            title="Ejemplo: Marco Vega"></i>
+                                    </i>
+                          </label>                                            
+                        <input type="text" [(ngModel)]="userNuevo.name" class="form-control input-underline input-lg"
+                         id="name" name="name" placeholder="">
+                    </div>
+
+
+                    
+                    <div class="form-group">
+                            <label for="userNuevo">
+                            <i class="fa fa-key">
+                              {{ 'Cédula' | translate }}
+                            </i>
+                          </label>
+                        <input type="text" [(ngModel)]="userNuevo.cedula" class="form-control input-underline input-lg" 
+                        id="cedula" name='cedula' ng-maxlength="10">
+                    </div>     
+                        
+
+
+                    <div class="form-group">
+                            <label for="userNuevo">
+                                    <i class="fa fa-envelope">
+                                      {{ 'Email' | translate }}
+                                    </i>
+                          </label> 
+                          <div class="form-group input-group">
+                              <input type="text" [(ngModel)]="userNuevo.email" class="form-control input-underline input-lg" 
+                                id="email" name="email">                          
+                          </div>                        
+                    </div>
+
+
+                    <div class="form-group">
+                            <label for="userNuevo">
+                                    <i class="fa fa-key">
+                                      {{ 'Password' | translate }}<i class="fa fa-question btn"
+                                                                   title="Su contraseña por defecto es su número de cédula"></i>
+                                    </i>
+                                  </label>
+                        <input type="password" [(ngModel)]="userNuevo.password" class="form-control input-underline input-lg" 
+                        id="password" name='password'>
+                    </div>
+                </div>
+                <a class="btn rounded-btn" (click)="createSignup()">{{ 'Register' | translate }}</a>&nbsp;
+                <a class="btn rounded-btn" [routerLink]="['/login']">{{ 'Log in' | translate }}</a>
+            </form>
+        </div>
+    </div>
+</div>
