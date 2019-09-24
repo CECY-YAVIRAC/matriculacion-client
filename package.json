@@ -39,7 +39,7 @@
     "ngx-spinner": "^7.0.0",
     "ngx-toastr": "^9.2.0",
     "rxjs": "6.3.3",
-    "sweetalert2": "^8.3.0",    
+    "sweetalert2": "^8.3.0",
     "yarn": "1.12.1",
     "zone.js": "0.8.26"
   },
@@ -66,4 +66,3 @@
     "typescript": "3.1.1"
   }
 }
-
