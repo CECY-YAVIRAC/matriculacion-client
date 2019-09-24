@@ -1,8 +1,5 @@
 import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {ServiceService} from '../../../matriculacion/service.service';
-import {forEach} from '@angular/router/src/utils/collection';
-import {Matricula} from '../../../matriculacion/modelos/matricula.model';
-import {Carrera} from '../../../matriculacion/modelos/carrera.model';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {User} from '../../../matriculacion/modelos/user.model';
 import {Chart} from 'chart.js';

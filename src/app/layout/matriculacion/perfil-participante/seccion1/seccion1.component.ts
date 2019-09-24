@@ -29,7 +29,7 @@ export class Seccion1Component implements OnInit {
     this.sexos = catalogos.sexos; 
     this.generos = catalogos.generos;   
     this.etnias = catalogos.etnias; 
-    this.getParticipantes();
+    this.getParticipante();
     
   }
 
@@ -47,7 +47,7 @@ export class Seccion1Component implements OnInit {
         });
   }
   
-  getParticipantes() {
+  getParticipante() {
     this.spinner.show();
     this.service.get('participantes/get_one?user_id=' + this.user.id).subscribe(
       response => {

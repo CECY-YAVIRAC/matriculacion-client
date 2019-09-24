@@ -1,17 +1,6 @@
 <nav class="sidebar" [ngClass]="{sidebarPushRight: isActive, collapsed: collapsed}">
   <div class="list-group">
-    <a routerLink="/dashboard-matricula" [routerLinkActive]="['router-link-active']" class="list-group-item"
-       *ngIf="user.role_id=='3' || user.role_id=='4' || user.role_id=='5'">
-      <i class="fa fa-fw fa-dashboard"></i>&nbsp;
-      <span>{{ 'Dashboard' | translate }}</span>
-    </a>
-
-   <!--  <a routerLink="/dashboard-cupo" [routerLinkActive]="['router-link-active']" class="list-group-item"
-       *ngIf="user.role_id=='1'">
-      <i class=" fa fa-fw fa-dashboard"></i>&nbsp;
-      <span>{{ 'Dashboard' | translate }}</span>
-    </a> --> 
-
+   
     <!--Perfil Participante-->
     <a [routerLink]="['/perfil-participante']" [routerLinkActive]="['router-link-active']" class="list-group-item"
        *ngIf="user.role_id=='2'">
@@ -20,12 +9,12 @@
     </a>
     <!--Perfil Financiero-->
     <a [routerLink]="['/tipo-descuento']" [routerLinkActive]="['router-link-active']" class="list-group-item"
-       *ngIf="user.role_id=='3'|| user.role_id=='5'">
+       *ngIf="user.role_id=='3'">
        <i class=" fa fa-fw fa-dashboard"></i>&nbsp;
       <span>{{ 'Tipo de Descuentos' | translate }}</span>
     </a>
     <a [routerLink]="['/cupos']" [routerLinkActive]="['router-link-active']" class="list-group-item"
-       *ngIf="user.role_id=='3'|| user.role_id=='5'">
+       *ngIf="user.role_id=='3'">
        <i class=" fa fa-fw fa-dashboard"></i>&nbsp;
       <span>{{ 'Pagos' | translate }}</span>
     </a>
@@ -54,41 +43,13 @@
        *ngIf="user.role_id=='1'">
        <i class="fa fa-fw fa-graduation-cap"></i>&nbsp;
       <span>{{ 'Asignaciones' | translate }}</span>
-    </a>
-
-
-
-    
-    <a [routerLink]="['/estudiantes']" [routerLinkActive]="['router-link-active']" class="list-group-item"
-       *ngIf="user.role_id=='0' || user.role_id=='0'">
-      <i class="fa fa-fw fa-graduation-cap"></i>&nbsp;
-      <span>{{ 'Students' | translate }}</span>
-    </a>
+    </a>    
+   <!--Perfil Matriculador-->
     <a [routerLink]="['/matricula']" [routerLinkActive]="['router-link-active']" class="list-group-item"
-       *ngIf="user.role_id=='3' || user.role_id=='4'">
+       *ngIf="user.role_id=='5'">
       <i class="fa fa-fw fa-certificate"></i>&nbsp;
       <span>{{ 'Registration' | translate }}</span>
-    </a>
-
-
-    <!--    <div class="nested-menu">-->
-    <!--      <a class="list-group-item" (click)="addExpandClass('pages')">-->
-    <!--        <i class="fa fa-plus"></i>&nbsp;-->
-    <!--        <span>{{ 'Menu' | translate }}</span>-->
-    <!--      </a>-->
-    <!--      <li class="nested" [class.expand]="showMenu === 'pages'">-->
-    <!--        <ul class="submenu">-->
-    <!--          <li>-->
-    <!--            <a [routerLink]="['/perfil-estudiante']" [routerLinkActive]="['router-link-active']"-->
-    <!--               class="list-group-item">-->
-    <!--              <i class="fa fa-fw fa-graduation-cap"></i>&nbsp;-->
-    <!--              <span>{{ 'Student Profile' | translate }}</span>-->
-    <!--            </a>-->
-    <!--          </li>-->
-
-    <!--        </ul>-->
-    <!--      </li>-->
-    <!--    </div>-->
+    </a>    
 
     <div class="header-fields">
       <a (click)="rltAndLtr()" class="list-group-item">

@@ -1,12 +1,9 @@
 <div class="col-md-12 user-container">
     <div class="row">
         <div class="col-sm-6">             
-            <img src="assets/images/logo_instituto_1.png"  width="270px" height="80px">
-        </div>
-        <div class="col-sm-6">             
-            <img src="assets/images/logo_cecy.png" width="200px" height="80px" align="right">
+            <img src="assets/images/logo_cecy.png" width="180px" height="120px" align="right">
           </div>
-      </div>     
+        </div>         
   <br>
     <h4> Catálogo Tipos de Descuentos de los Cursos de Capacitación Continua</h4>
     <br>     
@@ -24,7 +21,7 @@
       <tbody>
       <tr *ngFor="let tipodescuento of tipo_descuentos">
         <td class="hidden">{{tipodescuento.id}}</td>        
-        <td>{{tipodescuento.descripcion}}</td>
+        <td class="text-uppercase">{{tipodescuento.descripcion}}</td>
         <td>{{tipodescuento.valor_descuento}}</td>              
         <td><button class="btn btn-danger" (click)="deleteTipoDescuento(tipodescuento)"> Borrar</button></td>
         <td><button class="btn btn-success" (click)="openTipoDescuento(contentTipoDescuento,tipodescuento,false)"> Editar</button></td>
@@ -35,7 +32,7 @@
     <form name="tipodescuentos" method="post" #formCtrl="ngForm">
       <div class="modal-header">
         <div class="row">
-          <h4 class="col-lg-12" name="titulo">Nuevo Tipo de Descuento</h4>
+          <h4 class="col-lg-12" name="titulo">TIPO DE DESCUENTO</h4>
         </div>
       </div>
       <div class="modal-body" style="padding: 50px ">
@@ -44,7 +41,7 @@
                 <label for="createTipoDescuento">
                   <b class="text-danger">*</b> Descripción del Descuento:
                 </label>
-                <input type="text" [(ngModel)]="tipo_descuentosNuevo.descripcion" class="form-control"           
+                <input type="text" [(ngModel)]="tipo_descuentosNuevo.descripcion" class="form-control text-uppercase"           
                            id="descripcion" name="descripcion" placeholder="Ej. Estudiante Yavirac">                
                </div>
       </div>
@@ -53,8 +50,9 @@
             <label for="createTipoDescuento">
               <b class="text-danger">*</b> Valor del Descuento %:
             </label>
-            <input type="number" [(ngModel)]="tipo_descuentosNuevo.valor_descuento" class="form-control" 
-                       id="valor_descuento" name="valor_descuento" placeholder="Ej. 50">
+            <input type="text" [(ngModel)]="tipo_descuentosNuevo.valor_descuento" class="form-control" 
+                       id="valor_descuento" name="valor_descuento" placeholder="Ej. 50"
+                       maxlength="2" onkeypress="if ( isNaN( String.fromCharCode(event.keyCode) )) return false;">
            </div>
            </div>                           
       </div>

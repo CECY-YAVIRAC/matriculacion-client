@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router, NavigationEnd} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {ServiceService} from '../../matriculacion/service.service';
-import {PeriodoLectivo} from '../../matriculacion/modelos/periodo-lectivo.model';
+
 import {NgxSpinnerService} from 'ngx-spinner';
 import {User} from '../../matriculacion/modelos/user.model';
 
@@ -13,7 +13,7 @@ import {User} from '../../matriculacion/modelos/user.model';
 })
 export class HeaderComponent implements OnInit {
   public pushRightClass: string;
-  public periodoLectivoActual: PeriodoLectivo;
+ 
   user: User;
 
   constructor(
@@ -41,7 +41,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('user')) as User;
-    this.periodoLectivoActual = new PeriodoLectivo();
+ 
     /* this.getPeriodoLectivoActual(); */
     this.pushRightClass = 'push-right';
     this.translate.setDefaultLang('es');
@@ -72,16 +72,4 @@ export class HeaderComponent implements OnInit {
   changeLang(language: string) {
     this.translate.use(language);
   }
-
-  /* getPeriodoLectivoActual() {
-    this.spinner.show();
-    this.service.get('periodo_lectivos/actual').subscribe(
-      response => {
-        this.periodoLectivoActual = response['periodo_lectivo_actual'];
-        this.spinner.hide();
-      },
-      error => {
-        this.spinner.hide();
-      });
-  } */
 }

@@ -8,6 +8,7 @@ import * as html2canvas from 'html2canvas';
 import {Matricula} from '../../modelos/matricula.model';
 import {Asignacion} from '../../modelos/asignacion.model';
 import {User} from '../../modelos/user.model';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-formulario',
@@ -61,8 +62,7 @@ export class FormularioComponent implements OnInit {
     this.tiposIdentificacion = catalogos.tiposIdentificacion;
     this.averiguoCursos = catalogos.averiguoCursos;
     this.modalidades = catalogos.modalidadesCursos;
-    this.paralelos = catalogos.paralelos; 
-    this.getParticipantes();
+    this.paralelos = catalogos.paralelos;    
     this.getMatriculasParticipantes();
   }
   
@@ -83,11 +83,13 @@ export class FormularioComponent implements OnInit {
 /*ingresa los datos al formulario de la inscripcion*/
   obtenerDatosMatricula(asignacionId){
     this.asignacion_id = asignacionId;
+    this.getParticipante();
     this.getMatricula();
+  
   }
 
 /*llama al formulario lo del participante*/
-   getParticipantes() {
+   getParticipante() {
      this.spinner.show();
      this.service.get('participantes/get_one?user_id=' + this.user.id).subscribe(
        response => {
@@ -97,22 +99,29 @@ export class FormularioComponent implements OnInit {
        error => {
          this.spinner.hide();
       });
-   }
+   } 
 
    
 /*llama al formulario lo de la matricula*/
-  getMatricula() {  
-    this.spinner.show();
-    this.service.get('matriculas/get_one?user_id=' + this.user.id + '&asignacion_id=' + this.asignacion_id).subscribe(
-      response => {
-        this.matricula = response['matricula'];
-        this.spinner.hide();   
-      },
-      error => {
-        this.spinner.hide();
-      });
-  }
-
+getMatricula() {  
+  this.spinner.show();
+  this.service.get('matriculas/get_one?user_id=' + this.user.id + '&asignacion_id=' + this.asignacion_id).subscribe(
+    response => {
+      this.spinner.hide();
+      if (response['matricula'] == null) {       
+        swal.fire('NO ESTA INSCRITO EN NINGUN CURSO', 'Favor Complete Información Curso Para Inscribirse', 'info');
+      }
+      else {
+        this.matricula = response['matricula'];             
+        swal.fire('ESTA USTED INSCRITO', 
+        'Favor acerquese al Instituto Superior Tecnólogico Yavirac con el formulario impreso para legalizar su matriculación',
+        'success');
+      }
+    },
+    error => {
+      this.spinner.hide();
+    });
+}
   
 /*  imprime el formulario */
   imprimir() {
@@ -130,7 +139,6 @@ export class FormularioComponent implements OnInit {
               doc.addPage();
               doc.addImage(encabezadoHojaDatosImg, 'PNG', 10, 10, 190, 30);      
               doc.save('FORMULARIO-MATRICULA' + '.pdf');
-              // doc.autoPrint();
               window.open(doc.output('bloburl'));
               this.spinner.hide();
             });

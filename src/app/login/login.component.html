@@ -2,36 +2,42 @@
   <div class="row justify-content-md-center">
     <div class="col-md-4">
       <img src="assets/images/logo.png" class="user-avatar" width="150px"/>
-      <h1>IGNUG</h1>
-      <form role="form" name="form" (ngSubmit)="f.form.valid && onSubmit()">
+      <h1>IGNUG</h1>          
+      <div class="alert alert-danger" role="alert" *ngIf="isError">
+          Something is wrong!
+      </div>
+      <form role="form" name="form">
         <div class="form-content">
           <div class="form-group">
             <label for="userName">
-              <i class="fa fa-envelope">
+              <i class="fa fa-envelope" *ngIf="!isError">
                 {{ 'Email' | translate }}
               </i>
             </label>
             <div class="form-group input-group">
-              <input type="email" [(ngModel)]="userName" class="form-control input-underline input-lg" id="userName"
-                     name="userName" placeholder="">           
+              <input type="email" [(ngModel)]="userName" class="form-control input-underline input-lg text-lowercase" id="userName"
+                     name="userName" placeholder="" maxlength="50">           
             </div>
     
           </div>
           <div class="form-group">
             <label for="userName">
               <i class="fa fa-key">
-                {{ 'Password' | translate }}<i class="fa fa-question btn"
-                                               title="Su contraseña por defecto es su número de cédula"></i>
+                {{ 'Password' | translate }}
               </i>
             </label>
-            <input type="password" [(ngModel)]="password" class="form-control input-underline input-lg" id="password"
+            <input type="password" [(ngModel)]="password" class="form-control input-underline input-lg" id="password" maxlength="30"
                    name="password" placeholder="" (keyup)="onLoggedin($event)">
           </div>
         </div>
-        <a class="btn rounded-btn" (click)="onLoggedin(13)">{{ 'Log in' | translate }}</a>
-        <a class="btn rounded-btn m-1" (click)="forgotPassword()">¿{{ 'Forgot Password' | translate }}?</a>
-        <a class="btn rounded-btn " [routerLink]="['/signup']">{{ 'Register' | translate }}</a>
-      </form>
-    </div>
+        <span class="m-3">Si Tiene Cuenta</span>
+        <span class="m-3">No Tiene Cuenta</span>
+        <br>               
+        <a class="btn rounded-btn m-3" style="background-color:transparent" (click)="onLoggedin(13)">
+          <i class="fa fa-paper-plane"> {{ 'Ingresar' | translate }}</i></a>
+        <a class="btn rounded-btn " style="background-color:transparent" [routerLink]="['/signup']">
+          <i class="fa fa-user-circle-o"> {{ 'Registro' | translate }}</i></a>     
+      </form> </div>
   </div>
 </div>
+

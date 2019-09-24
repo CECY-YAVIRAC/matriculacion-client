@@ -3,14 +3,14 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {$} from 'protractor';
 import {Observable} from 'rxjs';
-import {Token} from './modelos/token.model';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ServiceService {
   headers: HttpHeaders;
-  token: Token;
+ 
 
   constructor(private _http: HttpClient) {
   }

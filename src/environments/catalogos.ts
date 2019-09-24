@@ -37,6 +37,22 @@ export const catalogos = {
 
   ],
 
+  carreras:[
+    {codigo: 1, descripcion: 'TECNOLOGÍA SUPERIOR EN DESARROLLO DE SOFTWARE'},
+    {codigo: 2, descripcion: 'TECNOLOGÍA SUPERIOR EN MARKETING'},
+    {codigo: 3, descripcion: 'DISEÑO DE MODAS CON NIVEL EQUIVALENTE A TECNOLOGÍA SUPERIOR'},
+    {codigo: 4, descripcion: 'TÉCNICO SUPERIOR EN GUIANZA TURÍSTICA CON MENCIÓN EN PATRIMONIO CULTURAL O AVITURISMO'},
+    {codigo: 5, descripcion: 'TÉCNICO SUPERIOR EN ARTE CULINARIO ECUATORIANO'},
+    {codigo: 6, descripcion: 'TECNOLOGÍA SUPERIOR EN MARKETING'},
+    {codigo: 7, descripcion: 'TECNOLOGÍA SUPERIOR EN ANÁLISIS DE SISTEMAS'},
+    {codigo: 8, descripcion: 'TECNOLOGÍA SUPERIOR EN ELECTRICIDAD'},
+    {codigo: 8, descripcion: 'TECNOLOGÍA SUPERIOR EN ELECTRÓNICA'},
+    {codigo: 8, descripcion: 'TECNOLOGÍA SUPERIOR EN ELECTRICIDAD'},
+    {codigo: 8, descripcion: 'TECNOLOGÍA SUPERIOR EN ELECTRICIDAD'},
+  
+  ],  
+
+
   jornadas: [
     {codigo: 1, descripcion: 'MATUTINA'},
     {codigo: 2, descripcion: 'VESPERTINA'},
@@ -100,10 +116,17 @@ export const catalogos = {
     condicionesAcademica: [
     {codigo: 1, descripcion: 'ESTUDIANTE YAVIRAC'},
     {codigo: 2, descripcion: 'EN PROCESO DE TITULACION'},
-    {codigo: 3, descripcion: 'EGRESADO YAVIRAC'} ,
+    {codigo: 3, descripcion: 'GRADUADO YAVIRAC'} ,
     {codigo: 4, descripcion: 'PERSONAL YAVIRAC'},
     {codigo: 5, descripcion: 'EXTERNO'}    
   ],
+
+
+    condicionesFinanciero: [
+    {codigo: 1, descripcion: 'INSCRITO'},
+    {codigo: 2, descripcion: 'PAGO REALIZADO'},   
+  ],
+
 
   estadosCivil: [
     {codigo: 1, descripcion: 'SOLTERO/A'},

@@ -1,18 +1,17 @@
 <button type="button" class="btn btn-primary fa fa-download btn-lg mt-3 mb-3" (click)="imprimir()" *ngIf="flagFormulario">
   Descargar
-</button>
-<br>
+</button><br>
 <div class="col-lg-12">
     <tr>                    
         <td colspan="3">
             <label>
               <b class="text-danger">*</b>Seleccione El Curso Eligido A Participar:
             </label>
-            <select [(ngModel)]="matriculaId" class="form-control" id="asignacion" name="asignacion"   
+            <select [(ngModel)]="matriculaId" class="form-control text-uppercase" id="asignacion" name="asignacion"   
                     [ngClass]="{'backgroundTextFieldWarning':matricula.asignacion=='0','backgroundTextFieldSuccess':matricula.asignacion!='0'}"
                     (change)="obtenerDatosMatricula($event.target.value)">
               <option value="0" selected>SELECCIONE...</option>
-              <option value="{{matricula.id}}" *ngFor="let matricula of matriculas">
+              <option value="{{matricula.asignacion_id}}" *ngFor="let matricula of matriculas">
                 {{matricula.nombre}}
               </option>
             </select>
@@ -42,12 +41,12 @@
         <tr>
           <td colspan="4">
             <strong>Código del curso:</strong>
-            <i class="ml-3">{{matricula.codigo}}</i>          
+            <i class="ml-3 text-uppercase">{{matricula.codigo}}</i>          
         </tr>
         <tr>
             <td colspan="5">
               <strong>Nombre del Curso:</strong>              
-              <i class="ml-3">{{matricula.nombre}}</i>
+              <i class="ml-3 text-uppercase">{{matricula.nombre}}</i>
             </td>            
           </tr>
         <tr>
@@ -156,25 +155,29 @@
           <tr>
               <td colspan="5">
                   <strong>Empresa donde trabaja:</strong>
-                  <i class="ml-3 text-uppercase">{{matricula.empresa_trabajo}}</i>
+                  <i *ngIf="!matricula.empresa_trabajo"  class="ml-3 text-uppercase">NO APLICA</i>
+                  <i *ngIf="matricula.empresa_trabajo" class="ml-3 text-uppercase">{{matricula.empresa_trabajo}}</i>
                 </td>
           </tr>
           <tr>
               <td colspan="5">
                   <strong>Correo electrónico de la empresa:</strong>
-                  <i class="ml-3">{{matricula.correo_empresa}}</i>
+                  <i *ngIf="!matricula.correo_empresa"  class="ml-3 text-uppercase">NO APLICA</i>
+                  <i *ngIf="matricula.correo_empresa" class="ml-3">{{matricula.correo_empresa}}</i>
                 </td>
           </tr>
-          <tr>
+          <tr> 
               <td colspan="5">
                   <strong>Número telefónico de la empresa:</strong>
-                  <i class="ml-3">{{matricula.telefono_empresa}}</i>
+                  <i *ngIf="!matricula.telefono_empresa"  class="ml-3">NO APLICA</i>
+                  <i *ngIf="matricula.telefono_empresa" class="ml-3">{{matricula.telefono_empresa}}</i>
                 </td>
           </tr>
           <tr>
               <td colspan="5">
                   <strong>Actividad de la empresa:</strong>
-                  <i class="ml-3 text-uppercase">{{matricula.actividad_empresa}}</i>
+                  <i *ngIf="!matricula.actividad_empresa"  class="ml-3 text-uppercase">NO APLICA</i>
+                  <i *ngIf="matricula.actividad_empresa" class="ml-3 text-uppercase">{{matricula.actividad_empresa}}</i>
                 </td>
           </tr>
           <tr>
@@ -190,7 +193,8 @@
                 <tr>
                     <td colspan="5">
                         <strong>Si está auspiciado, indique el nombre de contacto:</strong>
-                        <i class="ml-3 text-uppercase">{{matricula.nombre_contacto}}</i>
+                        <i *ngIf="!matricula.nombre_contacto" class="ml-3 text-uppercase">NO APLICA</i>
+                        <i *ngIf="matricula.nombre_contacto" class="ml-3 text-uppercase">{{matricula.nombre_contacto}}</i>
                       </td>
                 </tr>
                 <tr>
@@ -228,4 +232,28 @@
         </div>
   </div>
 </div>
-<button type="button" class="btn btn-primary fa fa-download btn-lg" (click)="imprimir()"> Descargar</button>
+<button type="button" class="btn btn-success fa fa-download btn-lg" (click)="imprimir()"> DESCARGAR FORMULARIO</button>
+<br>
+<br>
+<div class="modal-footer">
+    <p class="col-lg-12 text-center">        
+      <strong>ESTIMADO PARTICIPANTE:</strong>
+      <br>
+     <strong>SI USTED ESCOGIO LOS CURSOS DE INGLÉS, FAVOR DESCARGUE LA DOCUMENTACION ADJUNTA:</strong>
+     </p>
+  </div>
+
+      <div class="col-lg-12 text-center">
+        <div>
+            <div>  
+                <a href="assets/formats/politicas_estudiantes.pdf" target="page" type="button" class="btn btn-warning fa fa-download btn-lg" 
+                ng-click="download()"> POLITICAS DE ESTUDIANTES</a>  
+                <br> 
+                <br> 
+                <a href="assets/formats/carta_descargo_responsabilidades.pdf" target="page" type="button" class="btn btn-warning fa fa-download btn-lg" 
+                ng-click="download()"> CARTA DESCARGO DE RESPONSABILIDADES</a>        
+            </div>
+        </div>       
+      
+          
+   

@@ -63,7 +63,7 @@ export class CursoComponent implements OnInit {
         });
   }  
 
-  createCurso() {
+  createCurso() {   
     console.log (this.cursoNuevo);
     this.spinner.show();    
     this.service.post('cursos', {'curso': this.cursoNuevo,'instituto': this.cursoNuevo.instituto}).subscribe(
@@ -71,6 +71,11 @@ export class CursoComponent implements OnInit {
         this.getCurso();
         this.spinner.hide();        
         this.cursoNuevo = new Curso();
+        swal.fire(
+          'Creado!',
+          'Usted a creado un nuevo curso.',
+          'success'
+          );    
       },
       error => {
         this.spinner.hide();
@@ -119,8 +124,7 @@ export class CursoComponent implements OnInit {
     this.buscador = this.buscador.toUpperCase();
     const parametros =
         '?identificacion=' + this.buscador
-      + '&codigo=' + this.buscador
-      + '&nombre=' + this.buscador;
+      + '&codigo=' + this.buscador     
     this.spinner.show();
     this.service.get('cursos/filter' + parametros).subscribe(
       response => {     
@@ -177,9 +181,10 @@ export class CursoComponent implements OnInit {
     .then((result) => {
       if (result.value) {  
     this.service.update('cursos',
-      {'curso': cursos})
+      {'curso': cursos,})
       .subscribe(
         response => { 
+          this.getCurso();
           swal.fire(
             'Actualizado!',
             'Usted actualizo un curso existente.',

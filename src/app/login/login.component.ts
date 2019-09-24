@@ -24,9 +24,7 @@ export class LoginComponent implements OnInit {
               public router: Router
   ) {
     this.translate.addLangs(['es']);
-    this.translate.setDefaultLang('es');
-    // const browserLang = this.translate.getBrowserLang();
-    // this.translate.use(browserLang.match(/en|es/) ? browserLang : 'es');
+    this.translate.setDefaultLang('es');    
     this.translate.use('es');
   }
 
@@ -37,39 +35,31 @@ export class LoginComponent implements OnInit {
 
   onLoggedin(event) {
     if (event.which === 13 || event === 13) {
-      // ??
-      this.validateLogin = false;
-
       // muestra el cargando
       this.spinner.show();
-
-      this.userName = this.userName.toLocaleLowerCase();
-      
-      if (this.userName.search('@') === -1) {
-        this.userName = this.userName + '@yavirac.edu.ec';
-      }
-
+      this.userName = this.userName.toLocaleLowerCase();      
       this.service.postPublic('login', {
         'email': this.userName,
         'password': this.password
       })
       .subscribe(
-        response => {
-
+        response => {        
           console.log(response['user']);
           // cache 
           localStorage.setItem('isLoggedin', 'true');
           localStorage.setItem('user', JSON.stringify(response['user']));
 
           if (response['user']['role_id'] == '1') {
-            this.router.navigate(['dashboard-cupo']);
+            this.router.navigate(['rol']);
           }
-          if (response['user']['role_id'] == '2') {
-            // si el rol es 2 redirigiar a perfil participante
+          if (response['user']['role_id'] == '2') {           
             this.router.navigate(['perfil-participante']);
           }
           if (response['user']['role_id'] == '3') {
-            this.router.navigate(['dashboard-matricula']);
+            this.router.navigate(['cupos']);
+          }
+          if (response['user']['role_id'] == '5') {
+            this.router.navigate(['matricula']);
           }
             
           this.validateLogin = false;
@@ -88,10 +78,7 @@ export class LoginComponent implements OnInit {
   }
 
   forgotPassword() {
-    if (this.userName != null && this.userName !== '') {
-      /* if (this.userName.search('@') === -1) {
-        this.userName = this.userName + '@yavirac.edu.ec';
-      } */
+    if (this.userName != null && this.userName !== '') {     
       if (this.validateCorreoElectronico(this.userName)) {
         this.spinner.show();
         this.service.postPublic('password/email', {'email': this.userName}).subscribe(

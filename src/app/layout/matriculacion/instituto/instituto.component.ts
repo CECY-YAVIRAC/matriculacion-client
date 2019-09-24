@@ -50,6 +50,11 @@ export class InstitutoComponent implements OnInit {
         this.getInstituto();
         this.spinner.hide();        
         this.institutoNuevo = new Instituto();
+        swal.fire(
+          'Creado!',
+          'Usted a creado un nuevo instituto.',
+          'success'
+          );   
       },
       error => {
         this.spinner.hide();

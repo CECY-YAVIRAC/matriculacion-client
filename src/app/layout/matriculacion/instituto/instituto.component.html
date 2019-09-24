@@ -32,8 +32,8 @@
       <tbody>
       <tr *ngFor="let instituto of institutos">
         <td class="hidden">{{instituto.id}}</td>
-        <td>{{instituto.codigo}}</td>
-        <td>{{instituto.nombre}}</td>                
+        <td class="text-uppercase">{{instituto.codigo}}</td>
+        <td class="text-uppercase">{{instituto.nombre}}</td>                
         <td><button class="btn btn-danger" (click)="deleteInstituto(instituto)"> Borrar</button>
             <button class="btn btn-success" (click)="openInstituto(contentInstituto,instituto,false)" style="margin-left: 20px;"> Editar</button></td>
       </tr>
@@ -43,7 +43,7 @@
     <form name="institutos" method="post" #formCtrl="ngForm">
       <div class="modal-header">
         <div class="row">
-          <h4 class="col-lg-12" name="titulo">Nuevo</h4>
+          <h4 class="col-lg-12" name="titulo">INSTITUTOS</h4>
         </div>
       </div>
       <div class="modal-body" style="padding: 50px ">
@@ -52,8 +52,9 @@
                 <label for="createInstituto">
                   <b class="text-danger">*</b> Código:
                 </label>
-                <input type="text" [(ngModel)]="institutoNuevo.codigo" class="form-control"
-                id="codigo" name="codigo" placeholder="Ej. ISTY-SENECYT-A1- 001">
+                <input type="text" [(ngModel)]="institutoNuevo.codigo" class="form-control text-uppercase"
+                id="codigo" name="codigo" placeholder="Ej. ISTY-SENECYT-A1- 001"
+                maxlength="50">
                 </div>
       </div>
        <div class="form-group row">
@@ -61,8 +62,9 @@
             <label for="createInstituto">
               <b class="text-danger">*</b> Nombre:
             </label>
-            <input type="text" [(ngModel)]="institutoNuevo.nombre" class="form-control"
-                id="nombre" name="nombre" placeholder="Ej. INSTITUTO TECNOLOGICO SUPERIOR BENITO JUAREZ">
+            <input type="text" [(ngModel)]="institutoNuevo.nombre" class="form-control text-uppercase"
+                id="nombre" name="nombre" placeholder="Ej. INSTITUTO TECNOLOGICO SUPERIOR BENITO JUAREZ"
+                maxlength="100">
            </div>
            </div>          
       </div>

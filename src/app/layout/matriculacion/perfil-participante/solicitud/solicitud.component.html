@@ -1,85 +1,94 @@
-<button type="button" class="btn btn-primary fa fa-download btn-lg mt-3" (click)="getSolicitudMatricula()"
-        *ngIf="flagSolicitud"> Descargar
-</button>
-<div class="container" id="formulario1">
-  <div class="row ml-3" #encabezadoHojaVida>
-    <div class="col-lg-3">
-
-    </div>
-    <div class="col-lg-6 text-center">
-      <h3>
-        <strong>ASIGNATURAS</strong>
-      </h3>
-    </div>
-    <div class="col-lg-2">
-      <img src="{{'assets/images/logo_instituto_'+matricula.instituto_id+'.png'}}" alt="">
-    </div>
+<button type="button" class="btn btn-primary fa fa-download btn-lg mt-3 mb-3" (click)="imprimir()" *ngIf="flagFormulario">
+    Descargar
+  </button><br>
+  <div class="col-lg-12">
+      <tr>                    
+          <td colspan="3">
+              <label>
+                <b class="text-danger">*</b>Seleccione El Curso Eligido A Participar:
+              </label>
+              <select [(ngModel)]="matriculaId" class="form-control text-uppercase" id="asignacion" name="asignacion"   
+                      [ngClass]="{'backgroundTextFieldWarning':matricula.asignacion=='0','backgroundTextFieldSuccess':matricula.asignacion!='0'}"
+                      (change)="obtenerDatosMatricula($event.target.value)">
+                <option value="0" selected>SELECCIONE...</option>
+                <option value="{{matricula.asignacion_id}}" *ngFor="let matricula of matriculas">
+                  {{matricula.nombre}}
+                </option>
+              </select>
+            </td>
+          </tr>
+          <br>
   </div>
-  <div class="row m-5" #asignaturas>
-    <div class="col-lg-12">
-      <table class="table table-bordered table-sm">
-        <tr>
-          <th width="10%">
-            CÓDIGO
-          </th>
-          <th width="20%">
-            ASIGNATURA
-          </th>
-          <th width="10%">
-            PERIODO
-          </th>
-          <th width="10%">
-            NÚMERO MATRÍCULA
-          </th>
-          <th width="10%">
-            JORNADA
-          </th>
-          <th width="10%">
-            H. DOCENTES
-          </th>
-          <th width="10%">
-            H. PRÁCTICAS
-          </th>
-          <th width="10%">
-            H. AUTÓNOMAS
-          </th>
-        </tr>
-        <tr *ngFor="let detalle of detalleMatricula,let i=index">
-          <td>
-            {{detalle.asignatura_codigo}}
-          </td>
-          <td>
-            {{detalle.asignatura}}
-          </td>
-          <td class="text-center">
-            {{detalle.periodo}}
-          </td>
-          <td>
-            {{numerosMatricula[detalle.numero_matricula - 1]['descripcion']}}
-          </td>
-          <td>
-            {{jornadas[detalle.jornada - 1]['descripcion']}}
-          </td>
-          <td>
-            {{detalle.horas_docente}}
-          </td>
-          <td>
-            {{detalle.horas_practica}}
-          </td>
-          <td>
-            {{detalle.horas_autonoma}}
-          </td>
-      </table>
-    </div>
-  </div>
-  <div class="row m-5" #pieHojaVida1>
-    <div class="col-lg-12">
-      <div class="row">
-        <div class="col-lg-12">
-          <i class="pull-right">Pág. 1 de 1</i>
-        </div>
+  <div class="container" id="formulario1">
+    <div class="row ml-3" #encabezadoHojaVida>
+      <div class="col-lg-3">
+        <img src="assets/images/logo_senescyt.png" alt="">
+      </div>
+      <div class="col-lg-6 text-center">
+        <p>        
+          <strong>FORMULARIO DE MATRICULA</strong>
+          <br>
+          <strong>CURSOS DE CAPACITACIÓN CONTINUA</strong>
+        </p>
+      </div>
+      <div class="col-lg-3 text-left">
+        <img src="assets/images/logo_cecy.png" alt="" width="80%" height="50%">
       </div>
     </div>
+    <div class="row m-5" #cuerpoHojaVida>
+      <div class="col-lg-12">
+        <table class="table table-bordered">
+              <tr>
+              <td colspan="3">                
+                <strong class="ml-6 text-uppercase">EL/LA Participante:</strong>
+                <i class="ml-3 text-uppercase">{{participante.apellido1 + ' ' + participante.apellido2 + ' '+ participante.nombre1 + ' ' + participante.nombre2 + ' '}}.</i>
+              </tr>
+              <tr>
+               <td colspan="3">                
+                <strong class="ml-6 text-uppercase">Con Cédula de Ciudadanía:</strong>
+                <i class="ml-3">{{participante.identificacion}}.</i>
+               </tr>
+               <tr>
+                <td colspan="3">                
+                <strong class="ml-6 text-uppercase">ha cumplido con la inscripción y el pago del curso de:</strong>
+                <i class="ml-3 text-uppercase">{{matricula.nombre}}.</i>
+                </tr>
+                <tr>
+                <td colspan="3">                
+                <strong class="ml-6 text-uppercase">En el horario de:</strong>
+                <i class="ml-3">{{matricula.hora_inicio + ' - ' + matricula.hora_fin}}</i>,
+                </tr>
+                <tr>
+                <td colspan="3">                
+                <strong class="ml-6 text-uppercase">modalidad:</strong>
+                <i class="ml-3 text-uppercase">{{matricula.modalidad}}.</i>
+                </tr>
+                <tr>
+                <td colspan="3">                
+                <strong class="ml-6 text-uppercase">Por lo tanto se encuentra debidamente matriculado y puede recibir sin ningun impedimiento el curso mencionado.</strong>
+                </td>              
+               </tr>                  
+        </table>
+              <br><br>
+      <div class="row m-5" #pieHojaVida align="right">
+          <div class="col-lg-12">
+              <div class="row">
+                <div class="col-lg-12">
+                  <i class="pull-right"> __________________________________________</i>
+                  <strong class="pull-right">CENTRO DE EDUCACIÓN CONTINUA YAVIRAC:</strong>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12">
+                  <i class="pull-right">Pág. 1 de 1</i>
+                </div>
+              </div>
+            </div>
+      </div>
+      </div>
+    </div>
+   
   </div>
-</div>
-<hr>
+  <button type="button" class="btn btn-success fa fa-download btn-lg" (click)="imprimir()"> DESCARGAR FORMULARIO</button>
+  
+  

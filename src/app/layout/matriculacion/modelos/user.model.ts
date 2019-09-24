@@ -7,6 +7,8 @@ export class User {
   role_id: string;
   user_name: string;
   name: string;
+  nombre: string;
+  apellido: string;
   email: string;
   password: string;
   estado: string;
@@ -18,6 +20,8 @@ export class User {
     this.user_name = '';
     this.name = '';
     this.email = '';
+    this.nombre = '';
+    this.apellido = '';
     this.password = '';
     this.estado = '';
     this.role = new Rol();

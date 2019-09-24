@@ -11,7 +11,8 @@
                   <b class="text-danger">*</b> 1. Número de Documento:
                 </label>
                 <input [(ngModel)]="participante.identificacion" class="form-control"
-                       id="identificacion" name="identificacion" placeholder="Ej. 1723456789" required (focusout)="updateParticipante()">
+                       id="identificacion" name="identificacion" placeholder="Ej. 1723456789" required (focusout)="updateParticipante()"
+                       maxlength="10" onkeypress="if ( isNaN( String.fromCharCode(event.keyCode) )) return false;" >
               </td>
             </tr>
             <tr>
@@ -19,8 +20,9 @@
                 <label for="apellido1">
                   <b class="text-danger">*</b> 2. Primer Apellido:
                 </label>
-                <input type="text" [(ngModel)]="participante.apellido1" class="form-control text-uppercase"
-                       id="apellido1" name="apellido1" placeholder="Primer Apellido" required (focusout)="updateParticipante()">
+                <input type="text" [(ngModel)]="participante.apellido1" class="form-control  text-uppercase "
+                       id="apellido1" name="apellido1" placeholder="Primer Apellido" required (focusout)="updateParticipante()"
+                       maxlength="15">
               </td>
               <td>
                 <label for="apellido2">
@@ -28,7 +30,8 @@
                 </label>
                 <input type="text" [(ngModel)]="participante.apellido2"
                        class="form-control text-uppercase"
-                       id="apellido2" name="apellidos" placeholder="Segundo Apellido" required (focusout)="updateParticipante()">
+                       id="apellido2" name="apellidos" placeholder="Segundo Apellido" required (focusout)="updateParticipante()"
+                       maxlength="15">
               </td>                     
             
             <td>
@@ -37,14 +40,16 @@
                 </label>
                 <input type="text" [(ngModel)]="participante.nombre1"
                        class="form-control text-uppercase"
-                       id="nombre1" name="nombre1" placeholder="Primer Nombre" required (focusout)="updateParticipante()">
+                       id="nombre1" name="nombre1" placeholder="Primer Nombre" required (focusout)="updateParticipante()"
+                       maxlength="15">
               </td>
               <td>
                 <label for="nombre2">
                   <b class="text-danger">*</b> 2.3. Segundo Nombre:
                 </label>
                 <input type="text" [(ngModel)]="participante.nombre2" class="form-control text-uppercase"
-                       id="nombre2" name="nombre2" placeholder="Segundo Nombre" required (focusout)="updateParticipante()">
+                       id="nombre2" name="nombre2" placeholder="Segundo Nombre" required (focusout)="updateParticipante()"
+                       maxlength="15">
               </td>   
             </tr>   
             <tr>  

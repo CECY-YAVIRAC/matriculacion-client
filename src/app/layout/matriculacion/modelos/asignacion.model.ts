@@ -10,6 +10,7 @@ export class Asignacion {
   fecha_fin: Date;
   horas_duracion: string;
   valor_curso: string;
+  cupo_maximo: string;
   observacion: string;
   estado: string;
 
@@ -19,8 +20,9 @@ export class Asignacion {
     this.hora_fin = ''; 
     this.fecha_inicio = new Date;
     this.fecha_fin = new Date;
-    this.horas_duracion = "";
-    this.valor_curso = "";
+    this.horas_duracion = '';
+    this.valor_curso = '';
+    this.cupo_maximo = '';
     this.observacion = ''; 
     this.estado = ''; 
     this.curso = new Curso();  

@@ -31,6 +31,8 @@ export class AsignacionComponent implements OnInit {
   facilitadores:Array<Facilitador>;
   asignacionFacilitadores:Array<Facilitador>;
   flagFacilitadores:boolean;
+  hora_inicio: string;
+  hora_fin: string;
   
   
    
@@ -41,6 +43,8 @@ export class AsignacionComponent implements OnInit {
     this.asignacionNuevo = new Asignacion(); 
     this.asignacionFacilitadorNuevo = new Asignacion();
     this.buscador = '';
+    this.hora_inicio = '';
+    this.hora_fin = '';
     this.flagPagination = true;
     this.tipos = catalogos.tiposCursos; 
     this.cursos = new Array<Curso>(); 
@@ -107,6 +111,11 @@ export class AsignacionComponent implements OnInit {
         this.getAsignacion();
         this.spinner.hide();        
         this.asignacionNuevo = new Asignacion();
+        swal.fire(
+          'Creado!',
+          'Usted a creado una asignación nueva.',
+          'success'
+          );   
       },
       error => {
         this.spinner.hide();
@@ -114,8 +123,6 @@ export class AsignacionComponent implements OnInit {
   }
 
   createAsignacionFacilitador() {
-    console.log (this.facilitadorSeleccionado);
-    console.log (this.asignacionSeleccionada);
     this.spinner.show();    
     this.service.post('asignaciones/facilitadores', {'asignacion': this.asignacionSeleccionada, 'facilitador': this.facilitadorSeleccionado}).subscribe(
       response => {
@@ -127,7 +134,7 @@ export class AsignacionComponent implements OnInit {
       });
   }
 
-  deleteAsignacionFacilitador() {
+  deleteAsignacionFacilitador(asignacion_facilitador) {
     swal.fire(({
      title: 'Esta usted seguro?',
      text: "Va a borrar un facilitador existente!",
@@ -139,12 +146,12 @@ export class AsignacionComponent implements OnInit {
    }))
        .then((result) => {
          if (result.value) {           
-           this.spinner.show();
-           this.service.delete('asignaciones/facilitadores').subscribe(
-               response => {               
-               this.getAsignacionFacilitadores(this.asignacionSeleccionada);
-               this.spinner.hide();               
-               swal.fire(
+          this.spinner.show();    
+          this.service.post('eliminarFacilitador', {'pivot': asignacion_facilitador.pivot}).subscribe(
+            response => {
+              this.getAsignacionFacilitadores(this.asignacionSeleccionada);
+              this.spinner.hide();      
+              swal.fire(
                  'Borrado!',
                  'Usted ha borrado un facilitador existente.',
                  'success'
@@ -156,9 +163,6 @@ export class AsignacionComponent implements OnInit {
          }
       });   
   }
-
-
-
 
   cambiarEstadoFlagFacilitadores() {
     this.flagFacilitadores = false;
@@ -285,6 +289,7 @@ export class AsignacionComponent implements OnInit {
       {'asignacion': asignacion})
       .subscribe(
         response => { 
+          this.getAsignacion();
           swal.fire(
             'Actualizado!',
             'Usted actualizo una asignación existente.',
@@ -295,5 +300,4 @@ export class AsignacionComponent implements OnInit {
        }
     });   
 }
-
 }

@@ -36,19 +36,17 @@ export class SignupComponent implements OnInit {
 
   createSignup() {
     console.log (this.userNuevo);
-    this.userNuevo.user_name = '0';
     this.userNuevo.role_id= '2';
-
     this.spinner.show();    
     this.service.post('users', {'user': this.userNuevo,'role_id':2}).subscribe(
-      response => {        
+      response => {
         this.spinner.hide();        
-        this.userNuevo = new User();
-        swal.fire(
-          'Registrado!',
-          'Usted se ha registrado en el sistema.',
-          'success'
-        );    
+        this.userNuevo = new User();       
+          swal.fire(
+            'Registrado!',
+            'Usted se ha registrado en el sistema.',
+            'success'
+          );         
       },
       error => {
         this.spinner.hide();

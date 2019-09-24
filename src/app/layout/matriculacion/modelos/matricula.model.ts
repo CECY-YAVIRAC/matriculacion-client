@@ -16,6 +16,7 @@ export class Matricula {
   numero_matricula: string; 
   estado_academico: string;
   valor_total: string;
+  valor_descuento: string;
   nota: string;  
   carrera: string;
   nivel: string;  

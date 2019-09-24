@@ -7,7 +7,6 @@ export class Curso {
   nombre: string;
   tipo: string;
   modalidad: string;
-  duracion: string;
   lugar: string;
   lugar_otros: string; 
   estado: string;
@@ -19,7 +18,6 @@ export class Curso {
     this.nombre = '';
     this.tipo = ''; 
     this.modalidad = '';     
-    this.duracion = '';    
     this.lugar = '';
     this.lugar_otros = '';     
     this.estado = ''; 

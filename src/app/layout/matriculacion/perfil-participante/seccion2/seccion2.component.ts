@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiceService } from '../../service.service';
-import { Carrera } from '../../modelos/carrera.model';
 import { Asignacion } from '../../modelos/asignacion.model';
 import { catalogos } from '../../../../../environments/catalogos';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -18,12 +17,13 @@ export class Seccion2Component implements OnInit {
   }
 
 
-  asignaciones: Array<Asignacion>;
-  carreras: Array<Carrera>;
+  asignaciones: Array<Asignacion>;  
   estadoDatos: string;
+  cupos_disponibles: Array<any>;
   instruccionesAcademica: Array<any>;
   condicionesAcademica: Array<any>;
   modalidades: Array<any>;
+  carreras: Array<any>;
   matricula: Matricula;
   opcionesSiNo: Array<any>;
   generos: Array<any>;
@@ -38,11 +38,11 @@ export class Seccion2Component implements OnInit {
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('user')) as User;
-    this.asignaciones = new Array<Asignacion>();
-    this.carreras = new Array<Carrera>();
+    this.asignaciones = new Array<Asignacion>();  
     this.matricula = new Matricula();
     this.estadoDatos = '';
     this.flag2 = false;
+    this.carreras = catalogos.carreras;
     this.condicionesAcademica = catalogos.condicionesAcademica;
     this.instruccionesAcademica = catalogos.instruccionesAcademica;
     this.averiguoCursos = catalogos.averiguoCursos;
@@ -52,16 +52,17 @@ export class Seccion2Component implements OnInit {
     this.modalidades = catalogos.modalidadesCursos;
     this.flag = false;
     this.getAsignaciones();
-    this.getCarreras();
+    
 
   }
 
   updateMatricula(): void {
+    this.matricula.id = this.matricula.id;
     this.service.update('matriculas',
       { 'matricula': this.matricula, 'asignacion': { 'id': this.asignacion_id }, 'user_id': this.user.id })
       .subscribe(
-        response => {
-          swal.fire('Registro exitoso...', 'Se actualizo el registro', 'success');                 
+        response => {        
+            swal.fire('Registro exitoso...', 'Se actualizo el registro', 'success');  
         },
         error => {        
         });
@@ -83,8 +84,8 @@ export class Seccion2Component implements OnInit {
     this.service.post('matriculas',
       { 'matricula': this.matricula, 'asignacion': { 'id': this.asignacion_id }, 'user_id': this.user.id })
       .subscribe(
-        response => {
-          swal.fire('Registro exitoso...', 'Se creo el registro', 'success');                 
+        response => {         
+            swal.fire('Registro exitoso...', 'Se creo el registro', 'success');                                       
         },
         error => {        
         });
@@ -96,6 +97,7 @@ export class Seccion2Component implements OnInit {
         response => {
           console.log(response);
           this.asignaciones = response['asignaciones'];
+          this.cupos_disponibles = response['cupos_disponibles'];
         },
         error => {
         });
@@ -116,24 +118,38 @@ export class Seccion2Component implements OnInit {
   getMatricula() { 
     if (this.asignacion_id != '0') {
       this.flag2 = true;
-    } else { this.flag2 = false; }
-    this.spinner.show();
-    this.service.get('matriculas/get_one?user_id=' + this.user.id + '&asignacion_id=' + this.asignacion_id).subscribe(
-      response => {
-        this.spinner.hide();
-        if (response['matricula'] == null) {
-          this.flag = false;
-          swal.fire('No se encuentra matriculado', 'Complete el formulario para matricularse', 'info');
-        }
-        else {
-          this.matricula = response['matricula'];         
-          this.flag = true;          
-          swal.fire('Ya se encuentra matriculado', 'Puede editar su información si lo requiere', 'info');
-        }
-      },
-      error => {
-        this.spinner.hide();
-      });
+    } else { 
+      this.flag2 = false; 
+    }
+    if(this.cupos_disponibles[this.asignacion_id] <= 0){
+      this.flag2 = false;
+      swal.fire('NO HAY CUPOS DISPONIBLES', 
+      'Favor seleccione otro curso',
+      'info');
+    }else{
+      this.spinner.show();
+      this.service.get('matriculas/get_one?user_id=' + this.user.id + '&asignacion_id=' + this.asignacion_id).subscribe(
+        response => {
+          this.spinner.hide();
+          if (response['matricula'] == null) {
+            this.flag = false;
+            swal.fire('NO ESTA INSCRITO EN ESTE CURSO SELECCIONADO', 
+            'Favor Complete El Formulario, Presione Guardar Para Su Inscripción',
+            'question');
+          }
+          else {
+            this.matricula = response['matricula'];         
+            this.flag = true;          
+            swal.fire('YA ESTA INSCRITO EN ESTE CURSO SELECCIONADO',
+            'Si Necesita Puede Editar La Información Requerida, Presione Guardar Para Actualizarla', 
+            'success');
+          }
+        },
+        error => {
+          this.spinner.hide();
+        });
+    }
+   
   }
 
 }

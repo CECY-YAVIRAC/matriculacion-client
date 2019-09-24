@@ -67,6 +67,11 @@ export class RolComponent implements OnInit {
         this.getUser();
         this.spinner.hide();
         this.userNuevo = new User();
+        swal.fire(
+          'Creado!',
+          'Usted a creado un nuevo rol.',
+          'success'
+          );   
       },
       error => {
         this.spinner.hide();
@@ -142,7 +147,7 @@ export class RolComponent implements OnInit {
       .then((result) => {
         if (result.value) {
           this.spinner.show();
-          this.service.delete('users?user_id=' + user.id).subscribe(
+          this.service.delete('users?user_id=' + user.id ).subscribe(
             response => {
               this.getUser();
               this.spinner.hide();
@@ -158,8 +163,8 @@ export class RolComponent implements OnInit {
         }
       });
   }
-
-  updateUser(): void {
+  
+  updateUser() {
     swal.fire(({
       title: 'Esta usted seguro?',
       text: "Va a actualizar un rol existente!",
@@ -169,24 +174,24 @@ export class RolComponent implements OnInit {
       cancelButtonColor: '#c44',
       confirmButtonText: 'Si, deseo actualizarlo!'
     }))
-      .then((result) => {
-        if (result.value) {
-          let facilitador = this.userNuevo.name.split(" ");
-          this.service.update('users',{ 'user': this.userNuevo, 'nombre1': facilitador[0], 'apellido1': facilitador[1] })
-            .subscribe(
-              response => {
-                this.getUser();
-                this.spinner.hide();
-                swal.fire(
-                  'Actualizado!',
-                  'Usted actualizo un rol existente.',
-                  'success'
-                );
-              }
-            );
-        }
-      });
-  }
+    .then((result) => {
+      if (result.value) {    
+    let facilitador = this.userNuevo.name.split(" ");   
+    this.service.update('users', { 'user': this.userNuevo, 'nombre1': facilitador[0], 'apellido1': facilitador[1] }).subscribe(
+      response => {
+        this.getUser();
+        this.spinner.hide();
+        this.userNuevo = new User();
+        swal.fire(
+          'Actualizado!',
+          'Usted actualizo un rol existente.',
+          'success'
+        );
+      }
+    );
+}
+});
+}    
 }
 
 
