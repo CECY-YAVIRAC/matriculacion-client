@@ -46,6 +46,7 @@ export class Matricula {
     this.numero_matricula = '';
     this.estado_academico = '';
     this.valor_total = '';
+    this.valor_descuento = '';
     this.nota = '';
     this.carrera = '';
     this.nivel = '';
