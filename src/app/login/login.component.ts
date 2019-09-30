@@ -6,6 +6,7 @@ import {ServiceService} from '../layout/matriculacion/service.service';
 import swal from 'sweetalert2';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {User} from '../layout/matriculacion/modelos/user.model';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -14,8 +15,8 @@ import {User} from '../layout/matriculacion/modelos/user.model';
   animations: [routerTransition()]
 })
 export class LoginComponent implements OnInit {
-  userName: string;
-  password: string;
+  userName: string = '';
+  password: string = '';
   user: User;
   correoValido: boolean;
   validateLogin: boolean;
@@ -35,45 +36,55 @@ export class LoginComponent implements OnInit {
 
   onLoggedin(event) {
     if (event.which === 13 || event === 13) {
-      // muestra el cargando
-      this.spinner.show();
-      this.userName = this.userName.toLocaleLowerCase();      
-      this.service.postPublic('login', {
-        'email': this.userName,
-        'password': this.password
-      })
-      .subscribe(
-        response => {        
-          console.log(response['user']);
-          // cache 
-          localStorage.setItem('isLoggedin', 'true');
-          localStorage.setItem('user', JSON.stringify(response['user']));
-
-          if (response['user']['role_id'] == '1') {
-            this.router.navigate(['rol']);
-          }
-          if (response['user']['role_id'] == '2') {           
-            this.router.navigate(['perfil-participante']);
-          }
-          if (response['user']['role_id'] == '3') {
-            this.router.navigate(['cupos']);
-          }
-          if (response['user']['role_id'] == '5') {
-            this.router.navigate(['matricula']);
-          }
-            
-          this.validateLogin = false;
-
-          // ocultar el cargando
-          this.spinner.hide();
-        },
-        error => {
-          localStorage.removeItem('user');
-          localStorage.removeItem('isLoggedin');
-          swal.fire('Credenciales Incorrectas', 'Nombre de Usuario y/o Contraseña incorrectos', 'warning');
-          this.validateLogin = true;
-          this.spinner.hide();
-        });
+      // muestra el cargando      
+      if(this.userName === '' || this.password === '')
+      {swal.fire('CAMPOS VACIOS', 'INGRESE SU EMAIL Y PASSWORD', 'warning');}
+      else {
+        this.spinner.show();
+        this.userName = this.userName.toLocaleLowerCase();  
+        this.service.postPublic('login', {
+          'email': this.userName,
+          'password': this.password
+        })
+        .subscribe(
+          response => {         
+            // cache 
+            if(response['user'] === null) {
+              this.spinner.hide();
+              swal.fire('EMAIL INCORRECTO', 'NO EXISTE EL EMAIL INGRESADO', 'warning');
+            }else {
+              localStorage.setItem('isLoggedin', 'true');
+              localStorage.setItem('user', JSON.stringify(response['user']));
+    
+              if (response['user']['role_id'] == '1') {
+                this.router.navigate(['rol']);
+              }
+              if (response['user']['role_id'] == '2') {           
+                this.router.navigate(['perfil-participante']);
+              }
+              if (response['user']['role_id'] == '3') {
+                this.router.navigate(['cupos']);
+              }
+              if (response['user']['role_id'] == '5') {
+                this.router.navigate(['matricula']);
+              }
+                
+              this.validateLogin = false;
+    
+              // ocultar el cargando
+              this.spinner.hide();
+            }
+           
+          },
+          error => {
+            localStorage.removeItem('user');
+            localStorage.removeItem('isLoggedin');
+            swal.fire('PASSWORD INCORRECTO', 'NO EXISTE EL PASSWORD INGRESADO', 'warning');
+            this.validateLogin = true;
+            this.spinner.hide();
+            console.log('Error login ', error);
+          });  
+      }
     }
   }
 

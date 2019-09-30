@@ -17,22 +17,27 @@ export class RolComponent implements OnInit {
     private activateRoute: ActivatedRoute, ) {
   }
 
-  users: Array<User>;  
+  users: Array<User>;   
   userNuevo: User;
   userSeleccionada: User;
   buscador: string;
   flagPagination: boolean;
-  roles: Array<Rol>;
+  flagRoles:boolean;
+  roles: Array<Rol>; 
 
   ngOnInit() {
     this.userSeleccionada = new User();
     this.userNuevo = new User();
-    this.users = new Array<User>();
+    this.users = new Array<User>();  
     this.buscador = '';
     this.flagPagination = true;
     this.roles = new Array<Rol>();
+    this.flagRoles = false; 
     this.getUser();
-    this.getRol();
+   
+  
+    
+  
   }
 
 
@@ -44,9 +49,28 @@ export class RolComponent implements OnInit {
         },
         error => {
         });
-  }
+  }  
 
-  getRol(): void {
+  getUserParticipante(): void {
+    this.flagRoles = true;
+    this.service.get('users/participantes')
+      .subscribe(
+        response => {
+          this.users = response['users'];
+        },
+        error => {
+        });
+  }  
+
+  cambiarEstadoFlagRoles() {
+    this.flagRoles = false;
+    this.getUser();
+
+  }
+  
+  
+  
+  getRol(): void {   
     this.service.get('roles')
       .subscribe(
         response => {
@@ -55,8 +79,7 @@ export class RolComponent implements OnInit {
         },
         error => {
         });
-  }
-
+  }  
 
   createUser() {
     console.log(this.userNuevo);
@@ -116,6 +139,18 @@ export class RolComponent implements OnInit {
     }
   }
 
+  filterParticipante(event) {
+    if (event.which === 13 || this.buscador.length === 0) {
+      if (this.buscador.length === 0) {
+        this.flagPagination = true;
+        this.getUserParticipante();
+      } else {
+        this.flagPagination = false;
+        this.getBuscarParticipante();
+      }
+    }
+  }
+
   getBuscar() {
     this.buscador = this.buscador.toUpperCase();
     const parametros =
@@ -124,6 +159,25 @@ export class RolComponent implements OnInit {
       + '&name=' + this.buscador;
     this.spinner.show();
     this.service.get('users/filter' + parametros).subscribe(
+      response => {
+        console.log(response);
+        this.users = response['users'];
+        this.spinner.hide();
+      },
+      error => {
+        this.spinner.hide();
+      });
+  }
+
+
+  getBuscarParticipante() {
+    this.buscador = this.buscador.toUpperCase();
+    const parametros =
+      '?identificacion=' + this.buscador
+      + '&user_name=' + this.buscador
+      + '&name=' + this.buscador;
+    this.spinner.show();
+    this.service.get('users/filter/participantes' + parametros).subscribe(
       response => {
         console.log(response);
         this.users = response['users'];

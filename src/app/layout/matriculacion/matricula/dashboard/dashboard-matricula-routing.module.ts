@@ -4,7 +4,7 @@ import { DashboardMatriculaComponent } from './dashboard-matricula.component';
 
 const routes: Routes = [
     {
-        path: '', component: DashboardMatriculaComponent
+        path: ':id', component: DashboardMatriculaComponent
     }
 ];
 

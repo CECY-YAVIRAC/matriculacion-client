@@ -60,8 +60,7 @@ export class CupoComponent implements OnInit {
     this.buscador = '';
     this.asignaciones = new Array<Asignacion>();  
     this.matricula = new Array<Matricula>();  
-    this.condicionesFinanciero = catalogos.condicionesFinanciero;  
-    
+    this.condicionesFinanciero = catalogos.condicionesFinanciero;     
     this.erroresCargaCupos = new Array<any>();
     this.flagPagination = true;
     this.total_pages_pagination = new Array<any>();

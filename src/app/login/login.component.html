@@ -4,7 +4,7 @@
       <img src="assets/images/logo.png" class="user-avatar" width="150px"/>
       <h1>IGNUG</h1>          
       <div class="alert alert-danger" role="alert" *ngIf="isError">
-          Something is wrong!
+          que dices!
       </div>
       <form role="form" name="form">
         <div class="form-content">
@@ -20,7 +20,7 @@
             </div>
     
           </div>
-          <div class="form-group">
+          <div class="form-group" *ngIf="!isError">
             <label for="userName">
               <i class="fa fa-key">
                 {{ 'Password' | translate }}
@@ -32,11 +32,14 @@
         </div>
         <span class="m-3">Si Tiene Cuenta</span>
         <span class="m-3">No Tiene Cuenta</span>
+        <span class="m-3">Recuperar Password</span>
         <br>               
         <a class="btn rounded-btn m-3" style="background-color:transparent" (click)="onLoggedin(13)">
           <i class="fa fa-paper-plane"> {{ 'Ingresar' | translate }}</i></a>
-        <a class="btn rounded-btn " style="background-color:transparent" [routerLink]="['/signup']">
-          <i class="fa fa-user-circle-o"> {{ 'Registro' | translate }}</i></a>     
+        <a class="btn rounded-btn m-3 " style="background-color:transparent" [routerLink]="['/signup']">
+          <i class="fa fa-user-circle-o"> {{ 'Registro' | translate }}</i></a>  
+        <a class="btn rounded-btn m-3" style="background-color:transparent" (click)="forgotPassword()">
+          <i class="fa fa-key">¿{{ 'Forgot Password' | translate }}?</i></a>  
       </form> </div>
   </div>
 </div>

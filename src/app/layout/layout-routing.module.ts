@@ -26,11 +26,6 @@ const routes: Routes = [
       {path: 'grid', loadChildren: './grid/grid.module#GridModule', canActivate: [AuthGuard]},
       {path: 'components', loadChildren: './bs-component/bs-component.module#BsComponentModule', canActivate: [AuthGuard]},
       {path: 'blank-page', loadChildren: './blank-page/blank-page.module#BlankPageModule', canActivate: [AuthGuard]},
-      /* {
-        path: 'perfil-estudiante',
-        loadChildren: './matriculacion/perfil-estudiante/perfil-estudiante.module#PerfilEstudianteModule',
-        canActivate: [AuthGuard]
-      }, */
       {
         path: 'perfil-participante',
         loadChildren: './matriculacion/perfil-participante/perfil-participante.module#PerfilParticipanteModule',
@@ -68,13 +63,12 @@ const routes: Routes = [
         path: 'facilitador',
         loadChildren: './matriculacion/facilitador/facilitador.module#FacilitadorModule',
         canActivate: [AuthGuard]
-      },
+      },      
       {
         path: 'asignacion',
         loadChildren: './matriculacion/asignacion/asignacion.module#AsignacionModule',
         canActivate: [AuthGuard]
       },      
-      /* {path: 'estudiantes', loadChildren: './matriculacion/estudiante/estudiante.module#EstudianteModule', canActivate: [AuthGuard]}, */
     ]
   }
 ];

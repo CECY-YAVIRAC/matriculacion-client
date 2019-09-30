@@ -6,8 +6,6 @@ import {Router} from '@angular/router';
 import {Participante} from '../modelos/participante.model';
 import {NgbModal, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
 import swal from 'sweetalert2';
-
-
 import 'jspdf-autotable';
 import {NgxSpinnerModule, NgxSpinnerService} from 'ngx-spinner';
 import {User} from '../modelos/user.model';
@@ -22,11 +20,7 @@ import {User} from '../modelos/user.model';
 export class MatriculaComponent implements OnInit {
 
   matricula: Array<Matricula>;
- 
- 
-  asignaciones: Array<Asignacion>;
-
-  
+  asignaciones: Array<Asignacion>;  
   erroresCargaCupos: Array<any>;
   urlExportCuposPeriodoAcademico: string;
   urlExportCuposCarrera: string;
@@ -71,8 +65,6 @@ export class MatriculaComponent implements OnInit {
     this.rutaActual = this.router.url;  
     this.matriculas = new Array<Matricula>();   
     this.getAsignaciones();
-   
-
   }
 
   
@@ -150,8 +142,7 @@ export class MatriculaComponent implements OnInit {
 
   getBuscar() {
     this.buscador = this.buscador.toUpperCase();
-    const parametros =
-        '?participante_identificacion=' + this.buscador;   
+    const parametros = '?participante_identificacion=' + this.buscador;   
     this.spinner.show();
     this.service.get('matriculas/filter' + parametros).subscribe(
       response => {     
@@ -163,6 +154,5 @@ export class MatriculaComponent implements OnInit {
         this.spinner.hide();        
       });
   }
- 
 
 }

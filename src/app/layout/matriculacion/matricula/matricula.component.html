@@ -4,7 +4,7 @@
       </div>
 </div> 
 <br>
-<div class="row mt-3" *ngIf="!flagCursosCupo ">
+<div class="row mt-3" *ngIf="!flagCursosCupo">
   <div class="col-lg-2 col-xs-12">
   <h5 class="text-muted">MATRICULACIÓN:</h5>
   </div>  
@@ -56,7 +56,12 @@
             <button type="button" class="btn btn-success ml-1 btn-sm" (click)="Matriculacion(matricula)" title="Matriculacion">
                 <span>Matricular</span>
            </button>
-        </td>     
+        </td>  
+        <td>
+          <button type="button" class="btn btn-success ml-1 btn-sm" [routerLink]="['/dashboard-matricula', matricula.id]" title="Matriculacion">
+              <span>PDF</span>
+         </button>
+      </td>   
       </tr>
       </tbody>
     </table>
@@ -85,7 +90,7 @@
 </div>
 </div>
 <br>
-<!--Tabla matriculasdos-->
+<!--Tabla matriculados-->
 <div class="row mt-3" *ngIf="!flagCursoCupo && asignacion_id">
   <div class="col-lg-12">
     <table class="table table-responsive table-hover">
@@ -114,6 +119,3 @@
     </table>
   </div>
 </div>
-
-
-

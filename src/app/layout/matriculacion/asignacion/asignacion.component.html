@@ -50,8 +50,7 @@
         <td>{{asignacion.horas_duracion}}</td>
         <td>{{asignacion.valor_curso}}</td>
         <td>{{asignacion.cupo_maximo}}</td>
-        <td class="text-uppercase">{{asignacion.observacion}}</td>
-       
+        <td class="text-uppercase">{{asignacion.observacion}}</td>       
         <td><button class="btn btn-warning" (click)="getAsignacionFacilitadores(asignacion);getFacilitadores()">Facilitador</button></td>
         <td><button class="btn btn-danger" (click)="deleteAsignacion(asignacion)"> Borrar</button></td>
         <td><button class="btn btn-success" (click)="openAsignacion(contentAsignacion,asignacion,false)"> Editar</button></td>
@@ -166,7 +165,7 @@
    </div>  
    <!--Asignacion de Facilitadores para los Cursos -->
    <div *ngIf="flagFacilitadores">
-      <div class="row">
+      <div class="row">        
           <div class="col-sm-6">             
               <img src="assets/images/logo_cecy.png" width="180px" height="120px" align="right">
             </div>

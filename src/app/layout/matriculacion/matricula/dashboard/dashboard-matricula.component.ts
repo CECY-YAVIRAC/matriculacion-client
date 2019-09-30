@@ -1,8 +1,15 @@
-import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
-import {ServiceService} from '../../../matriculacion/service.service';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {ServiceService} from '../../service.service';
+import {Participante} from '../../modelos/participante.model';
 import {NgxSpinnerService} from 'ngx-spinner';
-import {User} from '../../../matriculacion/modelos/user.model';
-import {Chart} from 'chart.js';
+import {catalogos} from '../../../../../environments/catalogos';
+import * as jsPDF from 'jspdf';
+import * as html2canvas from 'html2canvas';
+import {Matricula} from '../../modelos/matricula.model';
+import {Asignacion} from '../../modelos/asignacion.model';
+import {User} from '../../modelos/user.model';
+import swal from 'sweetalert2';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard-matricula',
@@ -10,153 +17,98 @@ import {Chart} from 'chart.js';
   styleUrls: ['./dashboard-matricula.component.scss']
 })
 export class DashboardMatriculaComponent implements OnInit {
-  total_matriculados_carreras_count: Array<any>;
-  total_matriculados_institutos_count: Array<any>;
-  user: User;
-  chart = [];
-  etiquetaCanvas: Array<any>;
-  flagGraficos: boolean;
-  @ViewChildren('graficosCarreras') graficosCarreras: QueryList<any>;
-  @ViewChildren('graficosInstitutos') graficosInstitutos: QueryList<any>;
+  @ViewChild('encabezadoHojaVida') encabezadoHojaVida: ElementRef;
+  @ViewChild('cuerpoHojaVida') cuerpoHojaVida: ElementRef;
+  @ViewChild('pieHojaVida') pieHojaVida: ElementRef;
 
-  constructor(private spinner: NgxSpinnerService, private service: ServiceService) {
+
+
+  constructor(private spinner: NgxSpinnerService, private service: ServiceService,
+              private navParamsService: ActivatedRoute) {
+  this.spinnerConfiguracion = catalogos.spinnerConfiguracion[0];
   }
+
+  edad: number;
+  spinnerConfiguracion: any;
+  matricula: Matricula;
+  matriculas: Array<Matricula>;  
+  asignaciones: Asignacion; 
+  participante: Participante;
+  tiposIdentificacion: Array<any>;  
+  instruccionesAcademica: Array<any>;
+  modalidades: Array<any>;
+  opcionesSiNo: Array<any>;
+  opcionesSiNoNA: Array<any>; 
+  sexos: Array<any>;
+  generos: Array<any>;
+  etnias: Array<any>;
+  averiguoCursos: Array<any>;  
+  paralelos: Array<any>;  
+  user: User;
+  flagFormulario: boolean;
+  asignacion_id: string;
+
 
   ngOnInit() {
-    this.flagGraficos = true;
     this.user = JSON.parse(localStorage.getItem('user')) as User;
-    this.total_matriculados_carreras_count = new Array<any>();
-    this.total_matriculados_institutos_count = new Array<any>();
-    this.getMatriculadosCount();
+    console.log('Usuario es ', this.user);
+    this.flagFormulario = false;  
+    this.matricula = new Matricula();    
+    this.asignaciones = new Asignacion(); 
+    this.participante = new Participante();
+    this.getMatricula();
+  
   }
+  
 
-  getMatriculadosCount() {
-    this.flagGraficos = !this.flagGraficos;
+  
+/*llama al formulario lo de la matricula*/
+getMatricula() {  
+  this.spinner.show();
+  this.service.get('matriculas/get_one?user_id=' + '27' + '&asignacion_id=' + '4').subscribe(
+    response => {
+      this.spinner.hide();
+      if (response['matricula'] == null) {       
+        swal.fire('EL FORMULARIO INDICA QUE NO ESTA MATRICULADO EN NINGUN CURSO', 'Favor complete la matricula', 'info');
+      }
+      else {
+        this.matricula = response['matricula'];     
+        console.log('matricula es ', this.matricula);        
+        swal.fire('FORMULARIO DE MATRICULA EXITOSO', 
+        'Todo esta en pefecto orden',
+        'success');
+      }
+    },
+    error => {
+      this.spinner.hide();
+    });
+}
+
+/*  imprime el formulario */
+  imprimir() {
     this.spinner.show();
-    this.service.get('matriculas/count?id=' + this.user.id)
-      .subscribe(
-        response => {
-          this.total_matriculados_carreras_count = response['matriculados_carreras_count'];
-          this.total_matriculados_institutos_count = response['matriculados_institutos_count'];
-          this.spinner.hide();
-        },
-        error => {
-          this.spinner.hide();
-        });
-  }
-
-  drawMatriculasCount(matriculados: Array<any>) {
-    this.total_matriculados_carreras_count.forEach(value => {
-      this.chart = new Chart('carrera_' + value.carrera_id.toString(), {
-          type: 'bar',
-          data: {
-            labels: ['Primero', 'Segundo', 'Tercero', 'Cuarto', 'Quinto', 'Sexto'],
-            series: ['Matriculados', 'Aprobados'],
-            datasets: [{
-              label: 'Matriculados',
-              data: [value.matriculados_1, value.matriculados_2, value.matriculados_3, value.matriculados_4, value.matriculados_5,
-                value.matriculados_6],
-              fill: false,
-              lineTension: 0.2,
-              backgroundColor: ['#5cb85c', '#5cb85c', '#5cb85c', '#5cb85c', '#5cb85c', '#5cb85c'],
-              borderWidth: 2,
-            },
-              {
-                label: 'Aprobados',
-                data: [value.aprobados_1, value.aprobados_2, value.aprobados_3, value.aprobados_4, value.aprobados_5, value.aprobados_6],
-                fill: false,
-                lineTension: 0.2,
-                backgroundColor: ['#ffc107', '#ffc107 ', '#ffc107', '#ffc107', '#ffc107', '#ffc107'],
-                borderWidth: 2,
-              },
-              {
-                label: 'En Proceso',
-                data: [value.en_proceso_1, value.en_proceso_2, value.en_proceso_3, value.en_proceso_4, value.en_proceso_5,
-                  value.en_proceso_6],
-                fill: false,
-                lineTension: 0.2,
-                backgroundColor: ['#dc3545', '#dc3545', '#dc3545', '#dc3545', '#dc3545', '#dc3545'],
-                borderWidth: 2,
-              }]
-          },
-          options: {
-            title: {
-              text: value.malla,
-              display: true,
-            }
-          },
-          scales: {
-            xAxes: [{
-              display: false
-            }],
-            yAxes: [{
-              display: false
-            }],
-          }
-        }
-      );
-    });
-    this.total_matriculados_institutos_count.forEach(value => {
-      this.chart = new Chart('instituto_' + value.instituto_id.toString(), {
-          type: 'bar',
-          data: {
-            labels: ['Primero', 'Segundo', 'Tercero', 'Cuarto', 'Quinto', 'Sexto'],
-            datasets: [{
-              label: 'Matriculados',
-              data: [value.total_matriculados],
-              fill: false,
-              lineTension: 0.2,
-              backgroundColor: ['#5cb85c', '#5cb85c', '#5cb85c', '#5cb85c', '#5cb85c', '#5cb85c'],
-              borderWidth: 2,
-            },
-              {
-                label: 'Aprobados',
-                data: [value.total_aprobados],
-                fill: false,
-                lineTension: 0.2,
-                backgroundColor: ['#ffc107', '#ffc107 ', '#ffc107', '#ffc107', '#ffc107', '#ffc107'],
-                borderWidth: 2,
-              },
-              {
-                label: 'En Proceso',
-                data: [value.total_en_proceso],
-                fill: false,
-                lineTension: 0.2,
-                backgroundColor: ['#dc3545', '#dc3545', '#dc3545', '#dc3545', '#dc3545', '#dc3545'],
-                borderWidth: 2,
-              }]
-          },
-          options: {
-            title: {
-              text: value.instituto,
-              display: true,
-            }
-          },
-          scales: {
-            xAxes: [{
-              display: false
-            }],
-            yAxes: [{
-              display: false
-            }],
-          }
-        }
-      );
-    });
-  }
-
-  // tslint:disable-next-line:use-life-cycle-interface
-  ngAfterViewInit() {
-    this.graficosInstitutos.changes.subscribe(value => {
-      if (this.flagGraficos) {
-        this.drawMatriculasCount(this.total_matriculados_carreras_count);
-      }
-    });
-
-    this.graficosCarreras.changes.subscribe(value => {
-      if (this.flagGraficos) {
-        this.drawMatriculasCount(this.total_matriculados_carreras_count);
-      }
-    });
+    html2canvas(this.encabezadoHojaVida.nativeElement).then(canvasEncabezado => {
+      const encabezadoHojaDatosImg = canvasEncabezado.toDataURL('image/png');
+      html2canvas(this.cuerpoHojaVida.nativeElement).then(canvasCuerpo => {
+        const cuerpoHojaDatosImg = canvasCuerpo.toDataURL('image/png');
+        html2canvas(this.pieHojaVida.nativeElement).then(canvasPie => {
+          const pieHojaDatosImg = canvasPie.toDataURL('image/png');        
+              const doc = new jsPDF();
+              doc.addImage(encabezadoHojaDatosImg, 'PNG', 10, 10, 190, 25);
+              doc.addImage(cuerpoHojaDatosImg, 'PNG', 20, 40, 180, 60);
+              doc.addPage();
+              doc.addImage(encabezadoHojaDatosImg, 'PNG', 10, 10, 190, 30);      
+              doc.save('FORMULARIO-MATRICULA' + '.pdf');
+              window.open(doc.output('bloburl'));
+              this.spinner.hide();
+            });
+          });
+        });   
   }
 }
+
+  
+
+
+  
+
