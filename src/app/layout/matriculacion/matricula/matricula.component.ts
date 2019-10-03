@@ -146,9 +146,10 @@ export class MatriculaComponent implements OnInit {
     this.spinner.show();
     this.service.get('matriculas/filter' + parametros).subscribe(
       response => {     
-        console.log(response);
+        //console.log('hola soy carlos');
         this.matriculas = response['matriculas'];   
         this.spinner.hide();
+        console.log(this.matriculas);
       },
       error => {
         this.spinner.hide();        

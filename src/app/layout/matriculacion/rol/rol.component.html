@@ -37,7 +37,7 @@
       <tbody>
       <tr *ngFor="let user of users">
         <td class="hidden">{{user.id}}</td>
-        <td>{{user.role_id}}</td>
+        <td>{{user.role.descripcion}}</td>
         <td>{{user.user_name}}</td> 
         <td class="text-uppercase">{{user.name}}</td>       
         <td>{{user.email}}</td>                      
@@ -152,11 +152,12 @@
       <tbody>
       <tr *ngFor="let user of users">
         <td class="hidden">{{user.id}}</td>
-        <td>{{user.role_id}}</td>
+        <td>{{user.role.descripcion}}</td>
         <td>{{user.user_name}}</td> 
         <td class="text-uppercase">{{user.name}}</td>       
         <td>{{user.email}}</td>                      
-        <td><button class="btn btn-success" (click)="openUser(contentUser,user,false)" style="margin-left: 20px;"> Editar Rol</button></td>
+        <td><button class="btn btn-danger" (click)="deleteParticipante(user)"> Borrar</button>
+          <button class="btn btn-success" (click)="openUser(contentUser,user,false)" style="margin-left: 20px;"> Editar Participante</button></td>
       </tr>
     </tbody>
     </table>  

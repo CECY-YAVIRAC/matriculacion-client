@@ -34,6 +34,11 @@ export class RolComponent implements OnInit {
     this.roles = new Array<Rol>();
     this.flagRoles = false; 
     this.getUser();
+    this.getRol();
+  
+
+  
+
    
   
     
@@ -246,6 +251,37 @@ export class RolComponent implements OnInit {
 }
 });
 }    
+
+deleteParticipante(user) {
+  swal.fire(({
+    title: 'Esta usted seguro?',
+    text: "Va a borrar un rol existente!",
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Si, deseo borrarlo!'
+  }))
+    .then((result) => {
+      if (result.value) {
+        this.spinner.show();
+        this.service.delete('users/participantes?user_id=' + user.id ).subscribe(
+          response => {
+            this.getUserParticipante();
+            this.spinner.hide();
+            swal.fire(
+              'Borrado!',
+              'Usted ha borrado un rol existente.',
+              'success'
+            );
+          },
+          error => {
+            this.spinner.hide();
+          });
+      }
+    });
+}
+
 }
 
 

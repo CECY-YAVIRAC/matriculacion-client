@@ -99,8 +99,8 @@ export class CupoComponent implements OnInit {
               this.getBuscar();
               this.spinner.hide();
               swal.fire(
-                'Cobrado!',
-                'Usted ha cobrado el del curso.',
+                'Cancelado!',
+                'Usted ha cancelado el valor del curso.',
                 'success' 
               );                               
             },
@@ -122,8 +122,8 @@ export class CupoComponent implements OnInit {
               this.getBuscar();
               this.spinner.hide();
               swal.fire(
-                'Devuelto!',
-                'Usted ha devuelto el valor del curso.',
+                'Pago Devuelto!',
+                'Se ha devuelto el valor del curso.',
                 'success' 
               );            
             },

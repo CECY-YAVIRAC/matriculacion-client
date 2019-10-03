@@ -47,25 +47,24 @@ export class DashboardMatriculaComponent implements OnInit {
   user: User;
   flagFormulario: boolean;
   asignacion_id: string;
+  matricula_id: Number;
 
 
-  ngOnInit() {
-    this.user = JSON.parse(localStorage.getItem('user')) as User;
-    console.log('Usuario es ', this.user);
+  ngOnInit() {   
+    this.matricula_id = this.navParamsService.snapshot.params.id;
     this.flagFormulario = false;  
     this.matricula = new Matricula();    
     this.asignaciones = new Asignacion(); 
     this.participante = new Participante();
-    this.getMatricula();
-  
+    this.getMatricula();  
   }
   
 
   
 /*llama al formulario lo de la matricula*/
-getMatricula() {  
+getMatricula() {    
   this.spinner.show();
-  this.service.get('matriculas/get_one?user_id=' + '27' + '&asignacion_id=' + '4').subscribe(
+  this.service.get('matriculas/get_one?id_matricula=' + this.matricula_id).subscribe(
     response => {
       this.spinner.hide();
       if (response['matricula'] == null) {       
