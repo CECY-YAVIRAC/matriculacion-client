@@ -41,7 +41,8 @@
         <td>{{user.user_name}}</td> 
         <td class="text-uppercase">{{user.name}}</td>       
         <td>{{user.email}}</td>                      
-        <td><button class="btn btn-danger" (click)="deleteUser(user)"> Borrar</button>
+        <td><button class="btn btn-danger" (click)="deleteUser(user)"> Borrar Rol</button>
+             <button class="btn btn-danger" (click)="deleteFacilitador(user)" style="margin-left: 20px;"> Borrar Facilitador</button>
             <button class="btn btn-success" (click)="openUser(contentUser,user,false)" style="margin-left: 20px;"> Editar Rol</button></td>
       </tr>
     </tbody>
@@ -156,7 +157,7 @@
         <td>{{user.user_name}}</td> 
         <td class="text-uppercase">{{user.name}}</td>       
         <td>{{user.email}}</td>                      
-        <td><button class="btn btn-danger" (click)="deleteParticipante(user)"> Borrar</button>
+        <td><button class="btn btn-danger" (click)="deleteParticipante(user)"> Borrar Participante</button>          
           <button class="btn btn-success" (click)="openUser(contentUser,user,false)" style="margin-left: 20px;"> Editar Participante</button></td>
       </tr>
     </tbody>

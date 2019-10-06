@@ -180,10 +180,7 @@
         <td><h2>CURSO: {{asignacionSeleccionada.curso.nombre}}</h2></td>
       </div>  
       <div class="col-md-4"></div>
-     </div>
-     <div>
-     <button class="btn btn-warning" (click)="cambiarEstadoFlagFacilitadores()">Regresar</button>
-    </div>          
+     </div>              
      </div>
      <br>  
      <div class="col-lg-6">
@@ -218,7 +215,10 @@
         <td><button class="btn btn-danger" (click)="deleteAsignacionFacilitador(asignacion_facilitador)"> Borrar</button></td>    
       </tr>
       </tbody>
-    </table> 
+    </table>
+    <div>
+      <button class="btn btn-primary fa fa-arrow-left" style="width:180px;" (click)="cambiarEstadoFlagFacilitadores()"> Regresar</button>
+     </div> 
    </div>
    
   

@@ -36,13 +36,6 @@ export class RolComponent implements OnInit {
     this.getUser();
     this.getRol();
   
-
-  
-
-   
-  
-    
-  
   }
 
 
@@ -87,12 +80,11 @@ export class RolComponent implements OnInit {
   }  
 
   createUser() {
-    console.log(this.userNuevo);
-    let facilitador = this.userNuevo.name.split(" ");
+    console.log(this.userNuevo);    
     this.spinner.show();
-    this.service.post('users', { 'user': this.userNuevo, 'nombre1': facilitador[0], 'apellido1': facilitador[1] }).subscribe(
+    this.service.post('users', {'user': this.userNuevo}).subscribe(
       response => {
-        this.getUser();
+        this.getUser();     
         this.spinner.hide();
         this.userNuevo = new User();
         swal.fire(
@@ -255,7 +247,7 @@ export class RolComponent implements OnInit {
 deleteParticipante(user) {
   swal.fire(({
     title: 'Esta usted seguro?',
-    text: "Va a borrar un rol existente!",
+    text: "Va a borrar un participante existente!",
     type: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
@@ -271,7 +263,37 @@ deleteParticipante(user) {
             this.spinner.hide();
             swal.fire(
               'Borrado!',
-              'Usted ha borrado un rol existente.',
+              'Usted ha borrado un participante existente.',
+              'success'
+            );
+          },
+          error => {
+            this.spinner.hide();
+          });
+      }
+    });
+}
+
+deleteFacilitador(user) {
+  swal.fire(({
+    title: 'Esta usted seguro?',
+    text: "Va a borrar un facilitador existente!",
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Si, deseo borrarlo!'
+  }))
+    .then((result) => {
+      if (result.value) {
+        this.spinner.show();
+        this.service.delete('users/facilitadores?user_id=' + user.id ).subscribe(
+          response => {
+            this.getUser();
+            this.spinner.hide();
+            swal.fire(
+              'Borrado!',
+              'Usted ha borrado un facilitador existente.',
               'success'
             );
           },
