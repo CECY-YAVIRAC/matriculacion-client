@@ -18,12 +18,12 @@
   </div>
 </div>
 <br>
-    <button class="btn btn-warning" style="width:180px" (click)="getUserParticipante()"> Participantes</button>
+    <button class="btn btn-warning" style="width:180px" (click)="getUserParticipante()"> Participantes</button>   
     <br>
     <br>
     <button class="btn btn-success" style="width:180px" (click)="openUser(contentUser,null,true)"> Añadir Usuarios</button>
     <br>  
-    <br>    
+    <br>   
     <table class="table table-striped">
       <thead>
       <tr>
@@ -37,7 +37,7 @@
       <tbody>
       <tr *ngFor="let user of users">
         <td class="hidden">{{user.id}}</td>
-        <td>{{user.role.descripcion}}</td>
+        <td>{{user.role_id}}</td>
         <td>{{user.user_name}}</td> 
         <td class="text-uppercase">{{user.name}}</td>       
         <td>{{user.email}}</td>                      
@@ -113,8 +113,20 @@
         <button type="button" class="btn btn-danger" (click)="c('close')">Salir</button>
       </div>
     </form>
-  </ng-template>     
-   </div> 
+  </ng-template> 
+  <br>
+  <br> 
+  <tr>
+    <button class="btn-primary" >Rol:</button>  
+    <button class="btn-primary" style="margin-left: 10px;">1 = Administrador</button>  
+    <button class="btn-primary" style="margin-left: 10px;">2 = Participante</button>  
+    <button class="btn-primary" style="margin-left: 10px;">3 = Financiero</button> 
+    <button class="btn-primary" style="margin-left: 10px;">4 = Facilitador</button> 
+    <button class="btn-primary" style="margin-left: 10px;">5 = Matriculador</button>       
+  </tr>   
+   </div>
+   
+  
 
      
 <!--    ////////////////////////////////////////////////////// -->
@@ -153,7 +165,7 @@
       <tbody>
       <tr *ngFor="let user of users">
         <td class="hidden">{{user.id}}</td>
-        <td>{{user.role.descripcion}}</td>
+        <td>{{user.role_id}}</td>
         <td>{{user.user_name}}</td> 
         <td class="text-uppercase">{{user.name}}</td>       
         <td>{{user.email}}</td>                      
@@ -229,6 +241,11 @@
       </div>
     </form>
   </ng-template>
+  <br>
+  <tr>
+    <button class="btn-primary" >Rol:</button>   
+    <button class="btn-primary" style="margin-left: 10px;">2 = Participante</button>         
+  </tr>
   <br>
   <button class="btn btn-warning"  style="width:180px" (click)="cambiarEstadoFlagRoles()">REGRESAR</button>
    </div>   

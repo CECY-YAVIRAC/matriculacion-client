@@ -17,38 +17,38 @@
             </tr>
             <tr>
               <td>
-                <label for="apellido1">
-                  <b class="text-danger">*</b> 2. Primer Apellido:
-                </label>
-                <input type="text" [(ngModel)]="participante.apellido1" class="form-control  text-uppercase "
-                       id="apellido1" name="apellido1" placeholder="Primer Apellido" required (focusout)="updateParticipante()"
-                       maxlength="15">
-              </td>
-              <td>
-                <label for="apellido2">
-                  <b class="text-danger">*</b> 2.1. Segundo Apellido:
-                </label>
-                <input type="text" [(ngModel)]="participante.apellido2"
-                       class="form-control text-uppercase"
-                       id="apellido2" name="apellidos" placeholder="Segundo Apellido" required (focusout)="updateParticipante()"
-                       maxlength="15">
-              </td>                     
-            
-            <td>
                 <label for="nombre1">
-                  <b class="text-danger">*</b> 2.2. Primer Nombre:
+                  <b class="text-danger">*</b> 2. Primer Nombre:
                 </label>
-                <input type="text" [(ngModel)]="participante.nombre1"
-                       class="form-control text-uppercase"
+                <input type="text" [(ngModel)]="participante.nombre1" class="form-control  text-uppercase "
                        id="nombre1" name="nombre1" placeholder="Primer Nombre" required (focusout)="updateParticipante()"
                        maxlength="15">
               </td>
               <td>
                 <label for="nombre2">
-                  <b class="text-danger">*</b> 2.3. Segundo Nombre:
+                  <b class="text-danger">*</b> 2.1. Segundo Nombre:
                 </label>
-                <input type="text" [(ngModel)]="participante.nombre2" class="form-control text-uppercase"
+                <input type="text" [(ngModel)]="participante.nombre2"
+                       class="form-control text-uppercase"
                        id="nombre2" name="nombre2" placeholder="Segundo Nombre" required (focusout)="updateParticipante()"
+                       maxlength="15">
+              </td>                     
+            
+            <td>
+                <label for="apellido1">
+                  <b class="text-danger">*</b> 2.2. Primer Apellido:
+                </label>
+                <input type="text" [(ngModel)]="participante.apellido1"
+                       class="form-control text-uppercase"
+                       id="apellido1" name="apellido1" placeholder="Primer Apellido" required (focusout)="updateParticipante()"
+                       maxlength="15">
+              </td>
+              <td>
+                <label for="apellido2">
+                  <b class="text-danger">*</b> 2.3. Segundo Apellido:
+                </label>
+                <input type="text" [(ngModel)]="participante.apellido2" class="form-control text-uppercase"
+                       id="apellido2" name="apellido2" placeholder="Segundo Apellido" required (focusout)="updateParticipante()"
                        maxlength="15">
               </td>   
             </tr>   

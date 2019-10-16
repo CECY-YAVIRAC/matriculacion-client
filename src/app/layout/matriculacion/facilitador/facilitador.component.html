@@ -23,10 +23,10 @@
       <tr>
         <th class="hidden">Id</th>
         <th>Cédula</th>
-        <th width="8%">Primer Apellido</th>
-        <th width="8%">Segundo Apellido</th>
         <th width="8%">Primer Nombre</th>
         <th width="8%">Segundo Nombre</th>
+        <th width="8%">Primer Apellido</th>
+        <th width="8%">Segundo Apellido</th>
         <th width="10">Fecha Nacimiento</th> 
         <th width="8%">Email</th>
         <th width="8%">Capacitaciones</th>
@@ -37,10 +37,10 @@
       <tr *ngFor="let facilitador of facilitadores">
         <td class="hidden">{{facilitador.id}}</td>
         <td>{{facilitador.cedula}}</td>
-        <td class="text-uppercase">{{facilitador.apellido1}}</td>
-        <td class="text-uppercase">{{facilitador.apellido2}}</td>
         <td class="text-uppercase">{{facilitador.nombre1}}</td>
         <td class="text-uppercase">{{facilitador.nombre2}}</td>
+        <td class="text-uppercase">{{facilitador.apellido1}}</td>
+        <td class="text-uppercase">{{facilitador.apellido2}}</td>   
         <td>{{facilitador.fecha_nacimiento}}</td>
         <td>{{facilitador.correo_electronico}}</td>
         <td class="text-uppercase">{{facilitador.capacitaciones}}</td> 
@@ -70,40 +70,40 @@
       <div class="form-group row">
               <div class="col-lg-12">
                 <label for="createFacilitador">
-                  <b class="text-danger">*</b> Primer Apellido:
+                  <b class="text-danger">*</b> Primer Nombre:
                 </label>
-                <input type="text" [(ngModel)]="facilitadorNuevo.apellido1" class="form-control text-uppercase" 
-                           id="apellido1" name="apellido1" placeholder="Ej. Vega"
+                <input type="text" [(ngModel)]="facilitadorNuevo.nombre1" class="form-control text-uppercase" 
+                           id="nombre1" name="nombre1" placeholder="Ej. Marco"
                            maxlength="15">
                </div>
       </div>
        <div class="form-group row">
           <div class="col-lg-12" >
             <label for="createFacilitador">
-              <b class="text-danger">*</b> Segundo Apellido:
+              <b class="text-danger">*</b> Segundo Nombre:
             </label>
-            <input type="text" [(ngModel)]="facilitadorNuevo.apellido2" class="form-control text-uppercase"
-                       id="apellido2" name="apellido2" placeholder="Ej. Campo"
+            <input type="text" [(ngModel)]="facilitadorNuevo.nombre2" class="form-control text-uppercase"
+                       id="nombre2" name="nombre2" placeholder="Ej. Javier"
                        maxlength="15">
            </div>
            </div>  
       <div class="form-group row">
           <div class="col-lg-12" >
             <label for="createFacilitador">
-              <b class="text-danger">*</b> Primer Nombre:
+              <b class="text-danger">*</b> Primer Apellido:
             </label>
-            <input type="text" [(ngModel)]="facilitadorNuevo.nombre1" class="form-control text-uppercase" 
-                       id="nombre1" name="nombre1" placeholder="Ej. Marco"
+            <input type="text" [(ngModel)]="facilitadorNuevo.apellido1" class="form-control text-uppercase" 
+                       id="apellido1" name="apellido1" placeholder="Ej. Vega"
                        maxlength="15">
            </div>
         </div>
         <div class="form-group row">
           <div class="col-lg-12" >
             <label for="createFacilitador">
-              <b class="text-danger">*</b> Segundo Nombre:
+              <b class="text-danger">*</b> Segundo Apellido:
             </label>
-            <input type="text" [(ngModel)]="facilitadorNuevo.nombre2" class="form-control text-uppercase" 
-                       id="nombre2" name="nombre2" placeholder="Ej. German"
+            <input type="text" [(ngModel)]="facilitadorNuevo.apellido2" class="form-control text-uppercase" 
+                       id="apellido2" name="apellido2" placeholder="Ej. Campo"
                        maxlength="15">
            </div>
         </div>
